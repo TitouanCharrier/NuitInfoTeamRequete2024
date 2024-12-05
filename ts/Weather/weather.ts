@@ -1,3 +1,4 @@
+declare const Swal: any;
 class WeatherApp {
   private donnees: {
     apiKey: string;
@@ -176,7 +177,15 @@ class WeatherApp {
           this.getWeatherNow();
           this.getWeatherForecast();
         },
-        (error) => console.error("Error getting location:", error)
+        (error) => {
+          console.error("Error getting location:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "La géolocalisation n'est pas supportée et/ou autorisée.",
+            icon: "error",
+            confirmButtonText: "Je comprend",
+          });
+        }
       );
     } else {
       console.error("La géolocalisation n'est pas supportée et/ou autorisée.");
@@ -184,6 +193,8 @@ class WeatherApp {
   }
 }
 
-// Utilisation de la classe
-const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994");
-app.getLocation();
+document.addEventListener("DOMContentLoaded", () => {
+  // Utilisation de la classe
+  const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994");
+  app.getLocation();
+});

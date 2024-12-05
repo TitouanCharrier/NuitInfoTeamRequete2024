@@ -37,15 +37,25 @@ class WeatherApp {
         this.donnees.date.secondes = date.getSeconds();
         // Beautification
         this.donnees.date.mois =
-            this.donnees.date.mois < 10 ? `0${this.donnees.date.mois}` : this.donnees.date.mois;
+            this.donnees.date.mois < 10
+                ? `0${this.donnees.date.mois}`
+                : this.donnees.date.mois;
         this.donnees.date.jours =
-            this.donnees.date.jours < 10 ? `0${this.donnees.date.jours}` : this.donnees.date.jours;
+            this.donnees.date.jours < 10
+                ? `0${this.donnees.date.jours}`
+                : this.donnees.date.jours;
         this.donnees.date.heures =
-            this.donnees.date.heures < 10 ? `0${this.donnees.date.heures}` : this.donnees.date.heures;
+            this.donnees.date.heures < 10
+                ? `0${this.donnees.date.heures}`
+                : this.donnees.date.heures;
         this.donnees.date.minutes =
-            this.donnees.date.minutes < 10 ? `0${this.donnees.date.minutes}` : this.donnees.date.minutes;
+            this.donnees.date.minutes < 10
+                ? `0${this.donnees.date.minutes}`
+                : this.donnees.date.minutes;
         this.donnees.date.secondes =
-            this.donnees.date.secondes < 10 ? `0${this.donnees.date.secondes}` : this.donnees.date.secondes;
+            this.donnees.date.secondes < 10
+                ? `0${this.donnees.date.secondes}`
+                : this.donnees.date.secondes;
         return [
             this.donnees.date.heures,
             this.donnees.date.minutes,
@@ -64,7 +74,9 @@ class WeatherApp {
                     data.weather[0].description.substr(1);
             const icon = data.weather[0].icon;
             document.title = `Météo - ${data.name}`;
-            document.getElementById("weather_icon").setAttribute("src", `https://openweathermap.org/img/wn/${icon}@2x.png`);
+            document
+                .getElementById("weather_icon")
+                .setAttribute("src", `https://openweathermap.org/img/wn/${icon}@2x.png`);
             this.donnees.soleil.leve = new Date(data.sys.sunrise * 1000);
             this.donnees.soleil.couche = new Date(data.sys.sunset * 1000);
             document.getElementById("h_leve").textContent = `${this.donnees.soleil.leve.getHours()}:${this.donnees.soleil.leve.getMinutes()}`;
@@ -110,13 +122,23 @@ class WeatherApp {
                 this.donnees.longitude = position.coords.longitude;
                 this.getWeatherNow();
                 this.getWeatherForecast();
-            }, (error) => console.error("Error getting location:", error));
+            }, (error) => {
+                console.error("Error getting location:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "La géolocalisation n'est pas supportée et/ou autorisée.",
+                    icon: "error",
+                    confirmButtonText: "Je comprend",
+                });
+            });
         }
         else {
             console.error("La géolocalisation n'est pas supportée et/ou autorisée.");
         }
     }
 }
-// Utilisation de la classe
-const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994");
-app.getLocation();
+document.addEventListener("DOMContentLoaded", () => {
+    // Utilisation de la classe
+    const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994");
+    app.getLocation();
+});
