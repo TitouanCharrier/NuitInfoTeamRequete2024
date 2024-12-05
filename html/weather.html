@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../assets/placeholder_icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Prévisions météo en temps rélle." />
+    <meta name="keywords" content="météo, prévisions, temps" />
+    <meta http-equiv="refresh" content="300" />
+    <title>Weather</title>
+  </head>
+  <body>
+    <main>
+        <article class="loading" id="card1">
+          <h1>En ce moment</h1>
+          <img id="weather_icon" src="" alt="icon qui montre la meteo" />
+          <ul>
+            <li>
+              <img src="../assets/Weather/pointeur-de-localisation.png" alt="Location pin" />
+              <p id="location">chargement...</p>
+            </li>
+            <li>
+              <img src="../assets/Weather/thermometre.png" alt="thermometre logo" />
+              <p id="temperature">chargement...</p>
+            </li>
+            <li>
+              <img src="../assets/Weather/description.png" alt="description logo" />
+              <p id="description">chargement...</p>
+            </li>
+            <li>
+              <img src="../assets/Weather/lhorloge.png" alt="horloge logo" />
+              <p id="time-act">chargement...</p>
+            </li>
+          </ul>
+        </article>
+        <article class="loading" id="card2">
+          <h2>Prochaine 24h</h2>
+          <ul id="previsions"></ul>
+        </article>
+        <article id="card3" class="loading">
+          <h2>Cadran solaire</h2>
+          <div id="cadran_solaire">
+            <p id="h_leve"></p>
+            <div id="aiguille"><span>aaa</span></div>
+            <p id="h_couche"></p>
+          </div>
+        </article>
+        <article class="loading" id="card4">
+          <p id="citation"></p>
+          <p id="auteur"></p>
+        </article>
+      </main>
+  
+      <script src="../js/Weather/weather.js"></script>
+    </body>
+  </body>
+</html>
