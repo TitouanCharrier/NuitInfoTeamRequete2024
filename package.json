@@ -1,0 +1,22 @@
+{
+  "name": "nuitinfoteamrequete2024",
+  "version": "1.0.0",
+  "description": "Nuit de l'info 2024",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TitouanCharrier/NuitInfoTeamRequete2024.git"
+  },
+  "author": "La Team Requete",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/TitouanCharrier/NuitInfoTeamRequete2024/issues"
+  },
+  "homepage": "https://github.com/TitouanCharrier/NuitInfoTeamRequete2024#readme",
+  "dependencies": {
+    "typescript": "^5.7.2"
+  }
+}
