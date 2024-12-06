@@ -1,7 +1,8 @@
-body {
+.game-container {
   font-family: Arial, sans-serif;
   background-color: #f0f8ff;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
