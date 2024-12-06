@@ -188,7 +188,7 @@ export default class GameWindow {
                 else if (e === 1)
                     this.blocks.push(new Block(x, y, 0, 0, 1, true, 250, 0));
                 else if (e === 2)
-                    this.blocks.push(new Block(x, y, 0, 0, 1, true, 350, 0));
+                    this.blocks.push(new Block(x, y, 0, 0, 1, false, 350, 0));
                 x += this.tileSize;
             });
             y += this.tileSize;
