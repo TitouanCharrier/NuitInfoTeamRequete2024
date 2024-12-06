@@ -1,10 +1,231 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-
-
-#topbar {
-    font-size: 40px;
-    font-family: "Work Sans";
-    align-items: center;
+/* Styles généraux */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #f9f9f9; /* Fond clair uniforme */
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #f9f9f9; /* Même couleur que le fond */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: none; /* Pas de bordure ni d'ombre */
+}
+
+.topbar .logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.topbar .menu a {
+  margin: 0 1rem;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  transition: color 0.3s;
+}
+
+.topbar .menu a:hover {
+  color: #007bff; /* Accentuation légère sur hover */
+}
+
+/* Section texte + vidéo */
+.text-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.text-video .text {
+  flex: 1;
+  max-width: 600px;
+  color: #333;
+}
+
+.text-video .text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.text-video .text p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.text-video .cta-button {
+  padding: 0.8rem 1.5rem;
+  background-color: #633fe0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.text-video .cta-button:hover {
+  background-color: #0056b3;
+}
+
+.text-video .video {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-video .video video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+/*//////////////////////*/
+
+main {
+  background-color: #c2dbe0;
+  width: fit-content;
+  height: 100%;
+  background-attachment: fixed;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.body {
+  width: 75%;
+  background-color: #252525;
+}
+
+.human-body {
+  position: relative;
+  padding-top: 240px;
+  display: block;
+  margin: 40px auto;
+  height: fit-content;
+}
+.human-body svg:hover {
+  cursor: pointer;
+}
+
+.human-body .head:hover {
+  fill: #ff7d16;
+}
+
+.human-body .stomach:hover {
+  fill: #ff7d16;
+}
+
+.human-body .cheast:hover {
+  fill: #ff7d16;
+}
+
+.human-body .legs:hover {
+  fill: #ff7d16;
+}
+
+.human-body .legs:hover + .legs-text {
+  display: block;
+}
+
+.human-body svg {
+  position: absolute;
+  left: 50%;
+  fill: #89ade0;
+}
+.human-body svg.head {
+  margin-left: -28.5px;
+  top: -6px;
+}
+.human-body svg.shoulder {
+  margin-left: -53.5px;
+  top: 69px;
+}
+.human-body svg.arm {
+  margin-left: -78px;
+  top: 112px;
+}
+.human-body svg.cheast {
+  margin-left: -43.5px;
+  top: 88px;
+}
+.human-body svg.stomach {
+  margin-left: -37.5px;
+  top: 130px;
+}
+.human-body svg.legs {
+  margin-left: -65.5px;
+  top: 205px;
+  z-index: 9999;
+}
+.human-body svg.hands {
+  margin-left: -102.5px;
+  top: 224px;
+}
+
+/*Pop up maison*/
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.popup.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 300px;
+}
+
+.popup-content h2 {
+  margin: 0 0 15px;
+}
+
+.popup-content p {
+  margin: 0 0 20px;
+}
+
+.popup-content button:hover {
+  background-color: #a71d2a;
+}

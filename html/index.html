@@ -4,32 +4,139 @@
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/placeholder_icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="./public/manifest.json" />
-    <link rel="stylesheet" href="../styles/style.css">
-    <!--
-      Notice the use of ./public/ in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "./public//favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+    <link rel="stylesheet" href="../styles/style.css" />
+    <script src="../js/main.js"></script>
     <title>--Placeholder--</title>
   </head>
   <body>
     <noscript>You need to enable TypeScript to run this app.</noscript>
     <div id="root"></div>
-    <script type="module" src="/js/main.js"></script>
-    <div id="topbar">
-      <p>Nuit De L'Info</p>
-    </div>
-    <img src="../assets/placeholder_wave.png" ></img>
-    <h1> Ocean climate </h1>
-    <img src="../assets/placeholder.png" ></img>
+    <script type="module" src="/ts/main.ts"></script>
+    <header class="topbar">
+      <div class="logo">RACE FOR WATER</div>
+      <nav class="menu">
+          <a href="./CookieCauchemar.html">Cookie Cauchemard</a>
+          <a href="./Ergonomie.html">L'ergonomie</a>
+          <a href="#">Game-tcha</a>
+          <a href="./weather.html">SFEIR-Météo</a>
+      </nav>
+    </header>
+    <main>
+      <section class="text-video">
+        <div class="text">
+          <h2>Protégeons nos océans</h2>
+          <p>
+
+            Les océans sont une ressource précieuse, essentielle à la vie sur Terre. 
+            Ils régulent notre climat, abritent une biodiversité incroyable, et 
+            fournissent des moyens de subsistance pour des millions de personnes. 
+            Engageons-nous pour leur préservation aujourd'hui.
+
+          </p>
+          <button class="cta-button">En savoir plus</button>
+        </div>
+        <div class="video">
+          <video controls autoplay muted loop>
+            <source src="https://download-video-ak.vimeocdn.com/v3-1/playback/6ff25806-e02d-41ba-b65d-22220dc84d92/bb17ba76-fe753e46?__token__=st=1733435929~exp=1733450329~acl=%2Fv3-1%2Fplayback%2F6ff25806-e02d-41ba-b65d-22220dc84d92%2Fbb17ba76-fe753e46%2A~hmac=5d7d4492e1ddfe7a48adfb1fee03de78b4179453380f1dc3e3f713f13e4f9976&r=dXMtd2VzdDE%3D" type="video/mp4" />
+            Votre navigateur ne prend pas en charge la balise vidéo.
+          </video>
+        </div>
+      </section>
+
+      <div class="popup" id="popup">
+        
+        <div class="popup-content">
+          <button id="closePopup">Fermer</button>
+          <h2>Informations</h2>
+          <div id="popupBody">tempo</div>
+        </div>
+      </div>
+      <section class="human-body">
+        <svg
+          data-position="head"
+          class="head"
+          xmlns="http://www.w3.org/2000/svg"
+          width="56.594"
+          height="95.031"
+          viewBox="0 0 56.594 95.031"
+        >
+          <path
+            d="M15.92 68.5l8.8 12.546 3.97 13.984-9.254-7.38-4.622-15.848zm27.1 0l-8.8 12.546-3.976 13.988 9.254-7.38 4.622-15.848zm6.11-27.775l.108-11.775-21.16-14.742L8.123 26.133 8.09 40.19l-3.24.215 1.462 9.732 5.208 1.81 2.36 11.63 9.72 11.018 10.856-.324 9.56-10.37 1.918-11.952 5.207-1.81 1.342-9.517zm-43.085-1.84l-.257-13.82L28.226 11.9l23.618 15.755-.216 10.37 4.976-17.085L42.556 2.376 25.49 0 10.803 3.673.002 24.415z"
+          />
+        </svg>
+        <svg
+          data-position="shoulder"
+          class="shoulder"
+          xmlns="http://www.w3.org/2000/svg"
+          width="109.532"
+          height="46.594"
+          viewBox="0 0 109.532 46.594"
+        >
+          <path
+            d="M38.244-.004l1.98 9.232-11.653 2.857-7.474-2.637zm33.032 0l-1.98 9.232 11.653 2.857 7.474-2.637zm21.238 10.54l4.044-2.187 12.656 14 .07 5.33S92.76 10.66 92.515 10.535zm-1.285.58c-.008.28 17.762 18.922 17.762 18.922l.537 16.557-6.157-10.55L91.5 30.988 83.148 15.6zm-74.224-.58L12.962 8.35l-12.656 14-.062 5.325s16.52-17.015 16.764-17.14zm1.285.58C18.3 11.396.528 30.038.528 30.038L-.01 46.595l6.157-10.55 11.87-5.056L26.374 15.6z"
+          />
+        </svg>
+        <svg
+          data-position="arm"
+          class="arm"
+          xmlns="http://www.w3.org/2000/svg"
+          width="156.344"
+          height="119.25"
+          viewBox="0 0 156.344 119.25"
+        >
+          <path
+            d="M21.12 56.5a1.678 1.678 0 0 1-.427.33l.935 8.224 12.977-13.89 1.2-8.958A168.2 168.2 0 0 0 21.12 56.5zm1.387 12.522l-18.07 48.91 5.757 1.333 19.125-39.44 3.518-22.047zm-5.278-18.96l2.638 18.74-17.2 46.023L.01 113.05l6.644-35.518zm118.015 6.44a1.678 1.678 0 0 0 .426.33l-.934 8.222-12.977-13.89-1.2-8.958A168.2 168.2 0 0 1 135.24 56.5zm-1.39 12.52l18.073 48.91-5.758 1.333-19.132-39.44-3.52-22.05zm5.28-18.96l-2.64 18.74 17.2 46.023 2.658-1.775-6.643-35.518zm-103.1-12.323a1.78 1.78 0 0 1 .407-.24l3.666-27.345L33.07.015l-7.258 10.58-6.16 37.04.566 4.973a151.447 151.447 0 0 1 15.808-14.87zm84.3 0a1.824 1.824 0 0 0-.407-.24l-3.666-27.345L123.3.015l7.258 10.58 6.16 37.04-.566 4.973a151.447 151.447 0 0 0-15.822-14.87zM22.288 8.832l-3.3 35.276-2.2-26.238zm111.79 0l3.3 35.276 2.2-26.238z"
+          />
+        </svg>
+        <svg
+          data-position="cheast"
+          class="cheast"
+          xmlns="http://www.w3.org/2000/svg"
+          width="86.594"
+          height="45.063"
+          viewBox="0 0 86.594 45.063"
+        >
+          <path
+            d="M19.32 0l-9.225 16.488-10.1 5.056 6.15 4.836 4.832 14.07 11.2 4.616 17.85-8.828-4.452-34.7zm47.934 0l9.225 16.488 10.1 5.056-6.15 4.836-4.833 14.07-11.2 4.616-17.844-8.828 4.45-34.7z"
+          />
+        </svg>
+        <svg
+          data-position="stomach"
+          class="stomach"
+          xmlns="http://www.w3.org/2000/svg"
+          width="75.25"
+          height="107.594"
+          viewBox="0 0 75.25 107.594"
+        >
+          <path
+            d="M19.25 7.49l16.6-7.5-.5 12.16-14.943 7.662zm-10.322 8.9l6.9 3.848-.8-9.116zm5.617-8.732L1.32 2.15 6.3 15.6zm-8.17 9.267l9.015 5.514 1.54 11.028-8.795-5.735zm15.53 5.89l.332 8.662 12.286-2.665.664-11.826zm14.61 84.783L33.28 76.062l-.08-20.53-11.654-5.736-1.32 37.5zM22.735 35.64L22.57 46.3l11.787 3.166.166-16.657zm-14.16-5.255L16.49 35.9l1.1 11.25-8.8-7.06zm8.79 22.74l-9.673-7.28-.84 9.78L-.006 68.29l10.564 14.594 5.5.883 1.98-20.735zM56 7.488l-16.6-7.5.5 12.16 14.942 7.66zm10.32 8.9l-6.9 3.847.8-9.116zm-5.617-8.733L73.93 2.148l-4.98 13.447zm8.17 9.267l-9.015 5.514-1.54 11.03 8.8-5.736zm-15.53 5.89l-.332 8.662-12.285-2.665-.664-11.827zm-14.61 84.783l3.234-31.536.082-20.532 11.65-5.735 1.32 37.5zm13.78-71.957l.166 10.66-11.786 3.168-.166-16.657zm14.16-5.256l-7.915 5.514-1.1 11.25 8.794-7.06zm-8.79 22.743l9.673-7.28.84 9.78 6.862 12.66-10.564 14.597-5.5.883-1.975-20.74z"
+          />
+        </svg>
+        <svg
+          data-position="legs"
+          class="legs"
+          xmlns="http://www.w3.org/2000/svg"
+          width="250.626"
+          height="286.625"
+          viewBox="0 0 93.626 286.625"
+        >
+          <path
+            d="M 24.515 46.707 L 23.688 85.047 L 10.252 122.287 L 4.052 85.707 L 7.36 59.707 L 22.037 27.315 Z M 33.613 29.518 L 30.307 63.673 L 23.277 21.365 L 24.103 -0.01 Z M -50.917 46.704 L -50.09 85.046 L -36.653 122.287 L -30.453 85.707 L -33.76 59.707 L -48.437 27.316 Z M -60.012 29.519 L -56.706 63.674 L -49.678 21.366 L -50.505 -0.007 Z M 0.881 90.113 L 6 130 L -9 136 L -7 100 L 2.294 75.518 L 2.64 74.693 Z M 30.099 88.134 L 17.489 132.644 L 13.562 122.508 L 26.378 87.252 L 27.205 61.91 Z M -7.007 36.665 L -11 44 L -11 69 L 0.735 44.09 Z M 1.96 40.93 L 12.94 12.553 L 11.7 12.993 L -4.845 31.153 L -5.638 33.176 L -5.52 33.326 Z M -8 74 L -9 91 L 4.26 56.625 L 19 25.476 V 3 Z M 20.444 157.054 L 16 198 L 7 244 L 0.304 255.788 L 4 225 L 10.263 181.241 Z M -10 185 L -10 202 L -8 220 L -6 254 L -2 222 L 4.51 194.33 L 1.19 173.697 L -0.36 168.817 Z M -10 144 L -8 161 L -10 177 L 1 160 L -0.802 148.405 L -3 141 Z M 5 136 L 3.401 142.198 L 5 151 L 5 168 L 6 180 L 14 158 L 13 150 L 13 133 Z M -27.281 90.112 L -32.996 125.812 L -15 137 L -17 99 L -28.695 75.516 L -29.04 74.69 Z M -56.5 88.133 L -43.89 132.643 L -39.962 122.507 L -52.778 87.25 L -53.605 61.91 Z M -19.393 36.664 L -15 45 L -15 68 L -27.135 44.09 Z M -28.358 40.93 L -39.342 12.552 L -38.1 12.992 L -21.555 31.152 L -20.762 33.176 L -20.88 33.324 Z M -17 74 L -15 92 L -30.66 56.625 L -46.37 25.552 V 3.076 Z M -20 260 L -65 263 L -88 273 L -112 288 L -131 312 L -139 329 L -106 326 L -76 313 L -33 300 L -26 275 Z M -46.841 157.053 L -42 194 L -34 240 L -26.701 255.787 L -29 223 L -36.66 181.24 Z M -15 186 L -16 202 L -18 220 L -20 252 L -24 221 L -30.907 194.33 L -27.587 173.696 L -26.037 168.816 Z M -15 143 L -18 159 L -14 178 L -26 160 L -25.595 148.405 L -22.275 139.087 Z M -28 134 L -26 139 L -31.569 147.078 L -33 175 L -39 162 L -38 150 L -39 139 L -36 131 Z M 99 304 L 77 285 L 60 273 L 41 264 L -9 261 L -4 276 L 3 303 L 41 307 L 72 322 L 109 328 Z"
+          />
+        </svg>
+        <svg
+          data-position="hands"
+          class="hands"
+          xmlns="http://www.w3.org/2000/svg"
+          width="205"
+          height="38.938"
+          viewBox="0 0 205 38.938"
+        >
+          <path
+            d="M21.255-.002l2.88 6.9 8.412 1.335.664 12.458-4.427 17.8-2.878-.22 2.8-11.847-2.99-.084-4.676 12.6-3.544-.446 4.4-12.736-3.072-.584-5.978 13.543-4.428-.445 6.088-14.1-2.1-1.25-7.528 12.012-3.764-.445L12.4 12.9l-1.107-1.78L.665 15.57 0 13.124l8.635-7.786zm162.49 0l-2.88 6.9-8.412 1.335-.664 12.458 4.427 17.8 2.878-.22-2.8-11.847 2.99-.084 4.676 12.6 3.544-.446-4.4-12.736 3.072-.584 5.978 13.543 4.428-.445-6.088-14.1 2.1-1.25 7.528 12.012 3.764-.445L192.6 12.9l1.107-1.78 10.628 4.45.665-2.447-8.635-7.786z"
+          />
+        </svg>
+      </section>
+    </main>
   </body>
 </html>

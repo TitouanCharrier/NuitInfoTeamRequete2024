@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informations sur un Océan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+        background-color: #f7f7f9;
+      }
+      #oceanInput {
+        font-size: 18px;
+        padding: 10px;
+        width: 250px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+      button:active {
+        background-color: #0056b3;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+      }
+      .info {
+        text-align: left;
+        margin: 10px auto;
+        width: 80%;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      #timer {
+        font-size: 48px;
+        color: red;
+        margin-top: 20px;
+      }
+      body.explosion {
+        background-image: url("./explotion.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      /* Topbar */
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: #f9f9f9; /* Même couleur que le fond */
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: none; /* Pas de bordure ni d'ombre */
+      }
+
+      .topbar .logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .topbar .menu a {
+        margin: 0 1rem;
+        font-size: 1rem;
+        padding: 0.5rem 0;
+        transition: color 0.3s;
+      }
+
+      .topbar .menu a:hover {
+        color: #007bff; /* Accentuation légère sur hover */
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo">RACE FOR WATER</div>
+      <nav class="menu">
+        <a href="./CookieCauchemar.html">Cookie Cauchemard</a>
+        <a href="./Ergonomie.html">L'ergonomie</a>
+        <a href="#">Game-tcha</a>
+        <a href="./weather.html">SFEIR-Météo</a>
+      </nav>
+    </header>
+    <h1>Informations sur un Océan</h1>
+    <p>
+      Entrez un nom d'océan, mais chaque nouvelle lettre sera remplacée par une
+      lettre aléatoire :
+    </p>
+    <input
+      id="oceanInput"
+      type="text"
+      placeholder="Ex : Pacifique"
+      oninput="replaceLastWithRandomLetter()"
+    />
+    <br />
+    <button onclick="displayOceanInfo()">Afficher les informations</button>
+    <div id="result"></div>
+    <div id="timer">45</div>
+
+    <script>
+      // Stock des informations sur les océans
+      const oceanData = {
+        pacifique: [
+          "Le plus grand océan du monde, couvrant environ 63 millions de km².",
+          "Abrite la fosse des Mariannes, le point le plus profond de la Terre.",
+          "Contient plus de 25 000 îles, soit plus que tous les autres océans réunis.",
+          "Sépare l'Asie et l'Australie de l'Amérique.",
+          "La température de surface varie de -1 °C à 30 °C.",
+        ],
+        atlantique: [
+          "Deuxième plus grand océan du monde, couvrant environ 106 millions de km².",
+          "Sépare les continents de l'Amérique, de l'Europe et de l'Afrique.",
+          "Contient la dorsale médio-atlantique, une chaîne de montagnes sous-marines.",
+          "Célèbre pour le Triangle des Bermudes.",
+          "La mer des Caraïbes est une partie de l'océan Atlantique.",
+        ],
+        indien: [
+          "Troisième plus grand océan, couvrant environ 70 millions de km².",
+          "Bordé par l'Afrique à l'ouest, l'Asie au nord et l'Australie à l'est.",
+          "Abrite de nombreuses îles comme Madagascar et les Maldives.",
+          "Importante route commerciale pour le pétrole.",
+          "Sa température est relativement chaude, atteignant jusqu'à 30 °C dans certaines zones.",
+        ],
+        arctique: [
+          "Le plus petit océan, couvrant environ 14 millions de km².",
+          "Situé autour du pôle Nord, il est presque entièrement recouvert de glace en hiver.",
+          "Abrite des espèces uniques comme l'ours polaire et le narval.",
+          "Températures glaciales, souvent inférieures à -30 °C.",
+          "Joue un rôle crucial dans la régulation du climat mondial.",
+        ],
+        antarctique: [
+          "Situé autour du continent de l'Antarctique, couvrant environ 20 millions de km².",
+          "Aussi appelé océan Austral.",
+          "Riche en vie marine comme les phoques, les pingouins et les baleines.",
+          "Températures glaciales, avec une surface souvent gelée.",
+          "Une des régions les plus isolées de la planète.",
+        ],
+      };
+
+      // Variable pour garder une trace de la chaîne actuelle (sans modification aléatoire)
+      let currentValue = "";
+      let countdown = 45; // Temps en secondes
+      let timer; // Stockage du timer
+      let rand = genererNombreAleatoire();
+
+      function genererNombreAleatoire() {
+        var nombre = Math.floor(Math.random() * 10) + 1; // Génère un nombre entre 1 et 10
+        return nombre;
+      }
+
+      // Fonction pour obtenir une lettre aléatoire dans les 5 suivantes de l'alphabet
+      function getRandomNextLetter(char) {
+        const alphabet = "bcdefghijklmnoapqrstuvwxyz";
+        const index = alphabet.indexOf(char.toLowerCase());
+        if (index === -1) return char; // Si ce n'est pas une lettre, retourne tel quel
+
+        const nextIndex = (index + rand) % alphabet.length;
+        return alphabet[nextIndex];
+      }
+
+      // Fonction pour remplacer la dernière lettre tapée par une lettre aléatoire
+      function replaceLastWithRandomLetter() {
+        const inputField = document.getElementById("oceanInput");
+        const typedValue = inputField.value;
+
+        if (typedValue.length > currentValue.length) {
+          // Génère une lettre aléatoire basée sur la dernière lettre
+          const lastChar = typedValue[typedValue.length - 1];
+          const randomLetter = getRandomNextLetter(lastChar);
+          currentValue = typedValue.slice(0, -1) + randomLetter;
+          inputField.value = currentValue;
+        } else {
+          currentValue = typedValue;
+        }
+      }
+
+      // Fonction pour afficher les informations sur l'océan
+      function displayOceanInfo() {
+        clearTimeout(timer); // Arrête le timer
+        const oceanName = currentValue.toLowerCase().trim(); // Récupère le nom d'océan modifié
+
+        // Vérifie si l'océan est connu
+        if (oceanData[oceanName]) {
+          const infoList = oceanData[oceanName];
+          let htmlContent = `<div class="info"><h3>Informations sur l'océan ${
+            oceanName.charAt(0).toUpperCase() + oceanName.slice(1)
+          }</h3><ul>`;
+          infoList.forEach((info) => {
+            htmlContent += `<li>${info}</li>`;
+          });
+          htmlContent += `</ul></div>`;
+          document.getElementById("result").innerHTML = htmlContent;
+        } else {
+          document.getElementById(
+            "result"
+          ).innerHTML = `<p style="color: red;">L'océan "${oceanName}" n'est pas reconnu. Essayez un autre nom !</p>`;
+        }
+      }
+
+      // Fonction pour gérer le collage (Ctrl+V)
+      document.getElementById("oceanInput").addEventListener("paste", (e) => {
+        e.preventDefault(); // Empêche le collage
+        document.body.classList.add("explosion"); // Change le fond
+        alert("Petit tricheur !"); // Affiche la popup
+        countdown = Math.floor(countdown / 2); // Réduit le timer de moitié
+      });
+
+      // Fonction pour mettre à jour le timer
+      function updateTimer() {
+        const timerElement = document.getElementById("timer");
+        timerElement.textContent = countdown;
+
+        if (countdown === 0) {
+          document.getElementById("oceanInput").value = ""; // Efface la saisie
+          currentValue = ""; // Réinitialise la variable
+          document.getElementById("result").innerHTML = ""; // Efface le résultat
+          countdown = 45; // Redémarre le chronomètre
+          rand = genererNombreAleatoire();
+          setTimeout(updateTimer, 1000); // Relance le timer
+        } else {
+          countdown--;
+          timer = setTimeout(updateTimer, 1000); // Répète chaque seconde
+        }
+      }
+
+      // Lancer le timer au chargement de la page
+      updateTimer();
+      document.getElementById("oceanInput").value = "";
+    </script>
+  </body>
+</html>
