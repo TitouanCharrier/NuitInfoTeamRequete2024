@@ -66,7 +66,7 @@ let rugissement = new Attack(attacks_json.default.jsonAttacks.Rugissement);
 let mini_queue = new Attack(attacks_json.default.jsonAttacks["Mimi-queue"]);
 let gametcha = new Gametcha("cfgdg");
 gametcha.show();
-class Combat {
+export default class Combat {
     canvas;
     context;
     constructor() {
@@ -84,6 +84,9 @@ class Combat {
     getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
+    start() {
+        requestAnimationFrame(this.loop.bind(this));
+    }
     loop() {
         // draw background
         this.context.fillStyle = '#000000';
@@ -98,4 +101,3 @@ class Combat {
         requestAnimationFrame(this.loop.bind(this));
     }
 }
-new Combat();
