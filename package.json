@@ -2,7 +2,7 @@
   "name": "nuitinfoteamrequete2024",
   "version": "1.0.0",
   "description": "Nuit de l'info 2024",
-  "main": "main.js",
+  "main": "/js/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "construction": "tsc"
