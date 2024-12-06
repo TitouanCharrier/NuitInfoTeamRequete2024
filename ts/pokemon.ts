@@ -106,3 +106,38 @@ let jet_de_sable: Attack = new Attack(attacks_json.jsonAttacks["Jet de sable"]);
 let rugissement: Attack = new Attack(attacks_json.jsonAttacks.Rugissement);
 let mini_queue: Attack = new Attack(attacks_json.jsonAttacks["Mimi-queue"]);
 
+let gametcha = new Gametcha("cfgdg");
+gametcha.show();
+class Combat {
+    canvas;
+    context;
+    constructor() {
+        this.canvas = gametcha.canvas;
+        let _context = this.canvas.getContext("2d");
+        if (_context === null)
+            throw new Error("Gametcha canvas context is null");
+        this.context = _context;
+        this.context.lineCap = 'round';
+        this.context.lineJoin = 'round';
+        this.context.strokeStyle = 'black';
+        this.context.lineWidth = 1;
+        this.loop();
+    }
+    getRandomInt(min: number, max: number) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+    loop() {
+        // draw background
+        this.context.fillStyle = '#000000';
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        // draw button
+        this.context.fillStyle = '#eeaa00';
+        this.context.fillRect(220, 100, 200, 75);
+        this.context.fillStyle = '#001122';
+        this.context.textAlign = 'center';
+        this.context.font = '25px arial';
+        this.context.fillText('Start Game', 320, 145, 200);
+        requestAnimationFrame(this.loop.bind(this));
+    }
+}
+new Combat();
