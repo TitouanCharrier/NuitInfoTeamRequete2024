@@ -60,11 +60,27 @@ class Attack {
     }
 }
 
+let flameche: Attack = new Attack(attacks_json.default.jsonAttacks.Flammèche);
+let charge: Attack = new Attack(attacks_json.default.jsonAttacks.Charge);
+let vive_attaque: Attack = new Attack(attacks_json.default.jsonAttacks["Vive-attaque"]);
+let griffe: Attack = new Attack(attacks_json.default.jsonAttacks.Griffe);
+let jet_de_sable: Attack = new Attack(attacks_json.default.jsonAttacks["Jet de sable"]);
+let rugissement: Attack = new Attack(attacks_json.default.jsonAttacks.Rugissement);
+let mini_queue: Attack = new Attack(attacks_json.default.jsonAttacks["Mimi-queue"]);
+
 class Pokemon {
     private pokemon_struct: Pokemon_struct;
+    private atk_1: Attack;
+    private atk_2: Attack;
+    private atk_3: Attack;
+    private atk_4: Attack;
 
-    public constructor(pokemon_struct: Pokemon_struct) {
+    public constructor(pokemon_struct: Pokemon_struct, atk_1: Attack, atk_2: Attack, atk_3: Attack, atk_4: Attack) {
         this.pokemon_struct = pokemon_struct;
+        this.atk_1 = atk_1;
+        this.atk_2 = atk_2;
+        this.atk_3 = atk_3;
+        this.atk_4 = atk_4;
     }
 
     public getName() {
@@ -96,15 +112,8 @@ class Pokemon {
     }
 }
 
-let salameche: Pokemon = new Pokemon(pokemons_json.default.jsonPokemons.Salamèche);
-let rattata: Pokemon = new Pokemon(pokemons_json.default.jsonPokemons.Rattata);
-let flameche: Attack = new Attack(attacks_json.default.jsonAttacks.Flammèche);
-let charge: Attack = new Attack(attacks_json.default.jsonAttacks.Charge);
-let vive_attaque: Attack = new Attack(attacks_json.default.jsonAttacks["Vive-attaque"]);
-let griffe: Attack = new Attack(attacks_json.default.jsonAttacks.Griffe);
-let jet_de_sable: Attack = new Attack(attacks_json.default.jsonAttacks["Jet de sable"]);
-let rugissement: Attack = new Attack(attacks_json.default.jsonAttacks.Rugissement);
-let mini_queue: Attack = new Attack(attacks_json.default.jsonAttacks["Mimi-queue"]);
+let salameche: Pokemon = new Pokemon(pokemons_json.default.jsonPokemons.Salamèche, flameche, griffe, mini_queue, rugissement);
+let rattata: Pokemon = new Pokemon(pokemons_json.default.jsonPokemons.Rattata, charge, vive_attaque, jet_de_sable, rugissement);
 
 let gametcha = new Gametcha("cfgdg");
 gametcha.show();
@@ -123,9 +132,9 @@ export default class Combat {
         this.context.lineJoin = 'round';
         this.context.strokeStyle = 'black';
         this.context.lineWidth = 1;
-        this.loop();
         this.mode = true;
         this.selected = 1;
+        this.loop();
     }
     getRandomInt(min: number, max: number) {
         return Math.floor(Math.random() * (max - min)) + min;
@@ -148,6 +157,7 @@ export default class Combat {
         }
     }
     loop() {
+        this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
         // draw background
         this.context.fillStyle = '#000000';
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -181,7 +191,6 @@ export default class Combat {
         main_rect_pos_x -= sub_rect_padding;
         main_rect_pos_y -= sub_rect_padding;
 
-        this.context.fillStyle = '#bd0d00';
         this.context.textAlign = 'center';
         this.context.font = '25px arial';
 
@@ -246,6 +255,35 @@ export default class Combat {
                 }
             }
         }
+        window.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.code == "ArrowLeft") {
+                if (this.selected == 2 || this.selected == 4) {
+                    this.selected--;
+                }
+            }
+        });
+        window.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.code == "ArrowRight") {
+                if (this.selected == 1 || this.selected == 3) {
+                    this.selected++;
+                }
+            }
+        });
+        window.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.code == "ArrowDown") {
+                if (this.selected == 1 || this.selected == 2) {
+                    this.selected += 2;
+                }
+            }
+        });
+        window.addEventListener("keydown", (event: KeyboardEvent) => {
+            if (event.code == "ArrowUp") {
+                if (this.selected == 3 || this.selected == 4) {
+                    this.selected -= 2;
+                }
+            }
+        });
+        console.log(this.selected);
         requestAnimationFrame(this.loop.bind(this));
     }
 }
