@@ -86,37 +86,44 @@ article ul li p {
   font-size: 1rem;
 }
 
-/* Style spécifique au cadran solaire */
-#cadran_solaire {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px dashed var(--primary-color);
-  border-radius: 8px;
-  padding: 10px;
-  margin-top: 10px;
+input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
 }
 
-#aiguille {
-  width: 50px;
-  height: 50px;
-  background: var(--secondary-color);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+input:hover {
+  border-color: #0077b6;
+  background-color: #f1faff;
 }
 
-#aiguille span {
-  color: white;
-  font-size: 0.8rem;
-  font-weight: bold;
+input:focus {
+  border-color: #0077b6;
+  background-color: #ffffff;
+  box-shadow: 0 0 6px rgba(0, 119, 182, 0.3);
+}
+
+input::placeholder {
+  color: #aaa;
+  font-style: italic;
 }
 
 /* Réactivité */
 @media (max-width: 768px) {
   article {
     max-width: 90%;
+  }
+  input {
+    max-width: 100%;
   }
 }
 

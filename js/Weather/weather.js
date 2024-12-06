@@ -14,11 +14,7 @@ class WeatherApp {
                 heures: 0,
                 minutes: 0,
                 secondes: 0,
-            },
-            soleil: {
-                leve: 0,
-                couche: 0,
-            },
+            }
         };
         setInterval(() => this.updateLocalTime(), 1000);
         this.setupSearchHandler();
@@ -78,14 +74,8 @@ class WeatherApp {
             document
                 .getElementById("weather_icon")
                 .setAttribute("src", `https://openweathermap.org/img/wn/${icon}@2x.png`);
-            this.donnees.soleil.leve = new Date(data.sys.sunrise * 1000);
-            this.donnees.soleil.couche = new Date(data.sys.sunset * 1000);
-            document.getElementById("h_leve").textContent = `${this.donnees.soleil.leve.getHours()}:${this.donnees.soleil.leve.getMinutes()}`;
-            document.getElementById("h_couche").textContent = `${this.donnees.soleil.couche.getHours()}:${this.donnees.soleil.couche.getMinutes()}`;
-            // Stockez le timezone pour ajuster l'heure locale
             this.donnees.timezone = data.timezone;
-            this.updateSunPosition();
-            this.updateLocalTime(); // Mettez à jour l'heure locale
+            this.updateLocalTime();
         })
             .catch((error) => console.error("Error fetching weather data:", error));
     }
@@ -105,6 +95,9 @@ class WeatherApp {
             timeActElement.textContent = `${hours} : ${minutes} : ${seconds}`;
         }
     }
+    /**
+     * Méteo pour les 24 prochaines heures
+     */
     getWeatherForecast() {
         const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${this.donnees.latitude}&lon=${this.donnees.longitude}&appid=${this.donnees.apiKey}&units=metric&cnt=8&lang=fr`;
         fetch(apiUrl)
@@ -122,34 +115,6 @@ class WeatherApp {
             });
             document.getElementById("previsions").innerHTML = prevision.join("");
         });
-    }
-    /**
-     * Gestion du cadrant solaire
-     */
-    updateSunPosition() {
-        const currentTime = new Date();
-        const sunrise = this.donnees.soleil.leve;
-        const sunset = this.donnees.soleil.couche;
-        const sunriseTime = sunrise.getTime();
-        const sunsetTime = sunset.getTime();
-        const currentTimeValue = currentTime.getTime();
-        let angle = 0;
-        if (currentTimeValue >= sunriseTime && currentTimeValue <= sunsetTime) {
-            const totalDaylightMinutes = (sunsetTime - sunriseTime) / 60000;
-            const elapsedMinutes = (currentTimeValue - sunriseTime) / 60000;
-            angle = (elapsedMinutes / totalDaylightMinutes) * 180;
-        }
-        else if (currentTimeValue > sunsetTime) {
-            angle = 180;
-        }
-        else if (currentTimeValue < sunriseTime) {
-            angle = 0;
-        }
-        const needle = document.getElementById("aiguille");
-        if (needle) {
-            needle.style.transform = `rotate(${angle}deg)`;
-            needle.style.opacity = "1";
-        }
     }
     /**
      * Météo a partir du nom
