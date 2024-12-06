@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Gametcha {
+export default class Gametcha {
     canvas;
     id;
     constructor(id) {
@@ -37,4 +35,3 @@ class Gametcha {
         document.body.removeChild(this.canvas);
     }
 }
-exports.default = Gametcha;
