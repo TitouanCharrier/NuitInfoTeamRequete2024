@@ -6,9 +6,11 @@ export default class Gametcha {
     private isHuman: boolean;
     private context: CanvasRenderingContext2D;
     private intervalId: number;
+    private callback: (res: boolean) => void;
 	
-	public constructor(id: string) {
-		this.canvas = document.createElement("canvas");
+	public constructor(id: string, callback: (res: boolean) => void) {
+		this.callback = callback;
+        this.canvas = document.createElement("canvas");
         this.id = id;
         this.canvas.id = this.id;
         this.frameCount = 0;
@@ -71,6 +73,16 @@ export default class Gametcha {
         }
     }
 
+    private removeOpacity() {
+        this.div.style.opacity = (parseFloat(this.div.style.opacity) - 0.02).toString();
+        console.log(this.div.style.opacity);
+        if (parseFloat(this.div.style.opacity) <= 0) {
+            clearInterval(this.intervalId);
+            this.intervalId = -1;
+            document.body.removeChild(this.div);
+        }
+    }
+
     public show() {
         document.body.appendChild(this.div);
         this.intervalId = window.setInterval(this.addOpacity.bind(this), 0.01);
@@ -83,8 +95,8 @@ export default class Gametcha {
     }
 
     public hide() {
+        this.intervalId = window.setInterval(this.removeOpacity.bind(this), 0.01);
         document.body.removeChild(this.canvas);
-        document.body.removeChild(this.div);
     }
 
     // Fading at the end

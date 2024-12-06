@@ -90,7 +90,22 @@ export default class BulletHell {
     }
 
     public start() {
-        window.requestAnimationFrame(this.loop.bind(this));
+        window.requestAnimationFrame(this.startAnim.bind(this));
+    }
+
+    private startAnim() {
+        if (this.frameCount++ < 60) window.requestAnimationFrame(this.startAnim.bind(this));
+        else {
+            this.frameCount = 0;
+            window.requestAnimationFrame(this.loop.bind(this));
+        }
+
+        let middleX = (this.gametcha.canvas.width / 2);
+        let middleY = (this.gametcha.canvas.height / 2);
+        let x = this.frameCount * middleX / 60
+        let y = this.frameCount * middleY / 60
+        console.log("aa " + middleX + "  " + middleY + "  -  " + x + "  " + y)
+        this.context.fillRect(middleX - x, middleY - y, 2 * x, 2 * y);
     }
 
     private keyPressAction(event: KeyboardEvent) {
@@ -121,7 +136,7 @@ export default class BulletHell {
             spY: 0,
             img: document.createElement("img")
         }
-        p.img.src = "/assets/gametcha/bullet-hell/projectile1.png";
+        p.img.src = "/assets/gametcha/bullet-hell/projectile" + this.randInt(1, 4) + ".png";
         if (direction < 2) {
             // Horizontal speed
             p.y = this.randInt(0, this.gameScreen.h - p.height);
@@ -205,17 +220,22 @@ export default class BulletHell {
             // Canvas refresh
             this.context.fillRect(0, 0, this.gametcha.canvas.width, this.gametcha.canvas.height);
             // Game screen fill
-            this.context.clearRect(this.gameScreen.x, this.gameScreen.y, this.gameScreen.w, this.gameScreen.h);
+            this.context.fillStyle = "#ffffff";
+            this.context.fillRect(this.gameScreen.x, this.gameScreen.y, this.gameScreen.w, this.gameScreen.h);
+            this.context.fillStyle = "#000000";
         }
         else {
             // Canvas refresh
-            this.context.clearRect(0, 0, this.gametcha.canvas.width, this.gametcha.canvas.height);
+            this.context.fillStyle = "#ffffff";
+            this.context.fillRect(0, 0, this.gametcha.canvas.width, this.gametcha.canvas.height);
+            this.context.fillStyle = "#000000";
             // Game screen fill
             this.context.fillRect(this.gameScreen.x, this.gameScreen.y, this.gameScreen.w, this.gameScreen.h);
         }
         // UI rendering (health)
         this.context.fillRect(this.uiScreen.x, this.uiScreen.y, this.uiScreen.w, this.uiScreen.h);
-        this.context.clearRect(this.uiScreen.x + 20, this.uiScreen.y + 20, this.uiScreen.w - 40, this.uiScreen.h - 40);
+        this.context.fillStyle = "#ffffff";
+        this.context.fillRect(this.uiScreen.x + 20, this.uiScreen.y + 20, this.uiScreen.w - 40, this.uiScreen.h - 40);
         this.context.fillStyle = "#ff0000";
         this.context.fillRect(this.uiScreen.x + 20, this.uiScreen.y + 20, (this.uiScreen.w - 40) * this.player.health / this.player.maxHealth, this.uiScreen.h - 40);
         this.context.fillStyle = "#000000";

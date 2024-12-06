@@ -6,7 +6,9 @@ export default class Gametcha {
     isHuman;
     context;
     intervalId;
-    constructor(id) {
+    callback;
+    constructor(id, callback) {
+        this.callback = callback;
         this.canvas = document.createElement("canvas");
         this.id = id;
         this.canvas.id = this.id;
@@ -58,6 +60,15 @@ export default class Gametcha {
             this.intervalId = -1;
         }
     }
+    removeOpacity() {
+        this.div.style.opacity = (parseFloat(this.div.style.opacity) - 0.02).toString();
+        console.log(this.div.style.opacity);
+        if (parseFloat(this.div.style.opacity) <= 0) {
+            clearInterval(this.intervalId);
+            this.intervalId = -1;
+            document.body.removeChild(this.div);
+        }
+    }
     show() {
         document.body.appendChild(this.div);
         this.intervalId = window.setInterval(this.addOpacity.bind(this), 0.01);
@@ -68,8 +79,8 @@ export default class Gametcha {
         window.requestAnimationFrame(this.endLoop.bind(this));
     }
     hide() {
+        this.intervalId = window.setInterval(this.removeOpacity.bind(this), 0.01);
         document.body.removeChild(this.canvas);
-        document.body.removeChild(this.div);
     }
     // Fading at the end
     endLoop() {
