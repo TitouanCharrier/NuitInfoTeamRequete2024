@@ -1,4 +1,4 @@
-{
+export default {
     "jsonAttacks": {
         "Flammèche": {
             "name": "Flammèche",
@@ -65,4 +65,4 @@
             "pp": 35
         }
     }
-}
+};

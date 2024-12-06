@@ -1,4 +1,4 @@
-{
+export default {
     "jsonPokemons": {
         "Salamèche": {
             "sprite": "./salameche_sprite_dos.png",
@@ -21,4 +21,4 @@
             "Speed": 40
         }
     }
-}
+};
