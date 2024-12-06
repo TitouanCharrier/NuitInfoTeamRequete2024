@@ -36,7 +36,11 @@ main {
   padding-top: 15px;
 }
 
-/* Style des articles */
+.topbar {
+    opacity: .5;
+    border-radius: 15px;
+}
+
 article {
   background: white;
   opacity: 0.5;
