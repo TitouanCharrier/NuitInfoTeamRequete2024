@@ -1,17 +1,14 @@
 export default class Gametcha {
     canvas;
     div;
-    id;
     frameCount;
     isHuman;
     context;
     intervalId;
     callback;
-    constructor(id, callback) {
+    constructor(callback) {
         this.callback = callback;
         this.canvas = document.createElement("canvas");
-        this.id = id;
-        this.canvas.id = this.id;
         this.frameCount = 0;
         this.isHuman = false;
         this.div = document.createElement("div");
