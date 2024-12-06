@@ -24,7 +24,7 @@
   <body>
     <noscript>You need to enable TypeScript to run this app.</noscript>
     <div id="root"></div>
-    <script type="module" src="/ts/main.ts"></script>
+    <script src="../js/main.js"></script>
     <header class="topbar">
       <div class="logo">RACE FOR WATER</div>
       <nav class="menu">
@@ -48,14 +48,39 @@
           <button class="cta-button">En savoir plus</button>
         </div>
         <div class="video">
-          <video controls autoplay muted loop>
+          <video autoplay muted loop>
             <source src="https://download-video-ak.vimeocdn.com/v3-1/playback/6ff25806-e02d-41ba-b65d-22220dc84d92/bb17ba76-fe753e46?__token__=st=1733435929~exp=1733450329~acl=%2Fv3-1%2Fplayback%2F6ff25806-e02d-41ba-b65d-22220dc84d92%2Fbb17ba76-fe753e46%2A~hmac=5d7d4492e1ddfe7a48adfb1fee03de78b4179453380f1dc3e3f713f13e4f9976&r=dXMtd2VzdDE%3D" type="video/mp4" />
             Votre navigateur ne prend pas en charge la balise vidéo.
           </video>
         </div>
       </section>
     </main>
-    <img src="../assets/placeholder_wave.png" ></img>
+    <div id="divbody">
+      <div  class="body" id=headBtn>Tête</div>
+      <div id="bodyup">
+        <div class="txtzone" id="heartTxt">Courant marins et pompe thermohaline 
+          Le cœur est un organe musculaire situé dans la cage thoracique.Le cœur fonctionne comme une pompe qui, grâce à ses contractions régulières, propulse le sang dans tout l’organisme et assure ainsi l’alimentation en oxygène du corps entier. Il permet donc le bon fonctionnement du corps humain. 
+          Les courants marins régulent la chaleur des différents continents ainsi que l’humidité de l’air. La Terre n’étant pas ensoleillée de manière égale, les courants vont redistribuer les énergies solaires des zones chaudes aux zones froides. 
+          Avec une augmentation des températures, la redistribution de la chaleur est beaucoup plus compliqué. Cela provoque aussi une augmentation de son volume et rend plus compliqué la redistribution de la chaleur ce qui produits notamment de plus amples évènements extrêmes. Il est donc important d’essayer de les effets du changement climatique</div>
+
+        <div class="body" id=rArmBtn>bras droit</div>
+        <div id="chestdiv">
+          <div class="body" id="heartBtn" onclick="displaybody('heart')">coeur</div>
+          <div class="body" id="lungBtn" onclick="displaybody('lung')">poumon</div>
+        </div>
+        <!---<img src="../assets/awholewomenbodywithaquati_62580258.png" class="body" id=chestBtn></img>-->
+        <div  class="body" id=lArmBtn>bras gauche</div>
+        <div class="txtzone" id="lungTxt"  >Courant marins et pompe thermohaline 
+          Le cœur est un organe musculaire situé dans la cage thoracique.Le cœur fonctionne comme une pompe qui, grâce à ses contractions régulières, propulse le sang dans tout l’organisme et assure ainsi l’alimentation en oxygène du corps entier. Il permet donc le bon fonctionnement du corps humain. 
+          Les courants marins régulent la chaleur des différents continents ainsi que l’humidité de l’air. La Terre n’étant pas ensoleillée de manière égale, les courants vont redistribuer les énergies solaires des zones chaudes aux zones froides. 
+          Avec une augmentation des températures, la redistribution de la chaleur est beaucoup plus compliqué. Cela provoque aussi une augmentation de son volume et rend plus compliqué la redistribution de la chaleur ce qui produits notamment de plus amples évènements extrêmes. Il est donc important d’essayer de les effets du changement climatique</div>
+      </div>
+      <div id="bodydown">
+        <div  class="body" id=rLegBtn>jambe droite</div>
+        <div  class="body" id=lLegBtn>jambe gauche</div>
+      </div>
+    </div>
+    <img  class="body"src="../assets/placeholder_wave.png" ></img>
     <h1> Ocean climate </h1>
     <img src="../assets/placeholder.png" ></img>
   </body>
