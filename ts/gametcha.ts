@@ -5,6 +5,7 @@ export default class Gametcha {
     private frameCount: number;
     private isHuman: boolean;
     private context: CanvasRenderingContext2D;
+    private intervalId: number;
 	
 	public constructor(id: string) {
 		this.canvas = document.createElement("canvas");
@@ -13,6 +14,7 @@ export default class Gametcha {
         this.frameCount = 0;
         this.isHuman = false;
         this.div = document.createElement("div");
+        this.intervalId = -1;
 
         let _context = this.canvas.getContext("2d");
         
@@ -47,6 +49,7 @@ export default class Gametcha {
         this.div.style.bottom = "0";
         this.div.style.right = "0";
         this.div.style.background = "rgba(0, 0, 0, 0.5)";
+        this.div.style.opacity = "0";
         this.div.style.zIndex = "5000";
 
         this.canvas.width = width;
@@ -58,9 +61,19 @@ export default class Gametcha {
         this.canvas.style.transform = "translate(-50%, -50%)";
         this.canvas.style.zIndex = "5001";
 	}
+    
+    private addOpacity() {
+        this.div.style.opacity = (parseFloat(this.div.style.opacity) + 0.02).toString();
+        console.log(this.div.style.opacity);
+        if (parseFloat(this.div.style.opacity) >= 1) {
+            clearInterval(this.intervalId);
+            this.intervalId = -1;
+        }
+    }
 
     public show() {
         document.body.appendChild(this.div);
+        this.intervalId = window.setInterval(this.addOpacity.bind(this), 0.01);
         document.body.appendChild(this.canvas);
     }
 
