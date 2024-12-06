@@ -1,0 +1,10 @@
+{
+  "jour": {
+    "degage": "bg_light.jpg",
+    "nuage": "bg_cloud.jpg"
+  },
+  "nuit": {
+    "degage": "background.jpg",
+    "nuage": "bg_night.jpg"
+  }
+}

@@ -17,41 +17,57 @@
   </head>
   <body>
     <main>
-        <article class="loading" id="card1">
-          <h1>En ce moment</h1>
-          <img id="weather_icon" src="" alt="icon qui montre la meteo" />
-          <ul>
-            <li>
-              <img src="../assets/Weather/pointeur-de-localisation.png" alt="Location pin" />
-              <p id="location">chargement...</p>
-            </li>
-            <li>
-              <img src="../assets/Weather/thermometre.png" alt="thermometre logo" />
-              <p id="temperature">chargement...</p>
-            </li>
-            <li>
-              <img src="../assets/Weather/description.png" alt="description logo" />
-              <p id="description">chargement...</p>
-            </li>
-            <li>
-              <img src="../assets/Weather/lhorloge.png" alt="horloge logo" />
-              <p id="time-act">chargement...</p>
-            </li>
-          </ul>
-        </article>
-        <article class="loading" id="card2">
-          <h2>Prochaine 24h</h2>
-          <ul id="previsions"></ul>
-        </article>
-        <article id="card3" class="loading">
-          <h2>Cadran solaire</h2>
-          <div id="cadran_solaire">
-            <p id="h_leve"></p>
-            <div id="aiguille"><span>aaa</span></div>
-            <p id="h_couche"></p>
-          </div>
-        </article>
-      </main>
-    </body>
+      <article class="loading" id="card1">
+        <h1>En ce moment</h1>
+        <img id="weather_icon" src="" alt="icon qui montre la meteo" />
+        <ul>
+          <li>
+            <img
+              src="../assets/Weather/pointeur-de-localisation.png"
+              alt="Location pin"
+            />
+            <p id="location">chargement...</p>
+          </li>
+          <li>
+            <img
+              src="../assets/Weather/thermometre.png"
+              alt="thermometre logo"
+            />
+            <p id="temperature">chargement...</p>
+          </li>
+          <li>
+            <img
+              src="../assets/Weather/description.png"
+              alt="description logo"
+            />
+            <p id="description">chargement...</p>
+          </li>
+          <li>
+            <img src="../assets/Weather/lhorloge.png" alt="horloge logo" />
+            <p id="time-act">chargement...</p>
+          </li>
+        </ul>
+      </article>
+      <article class="loading" id="card2">
+        <h2>Prochaine 24h</h2>
+        <ul id="previsions"></ul>
+      </article>
+      <article id="card3" class="loading">
+        <h2>Cadran solaire</h2>
+        <div id="cadran_solaire">
+          <p id="h_leve"></p>
+          <div id="aiguille"><span>aaa</span></div>
+          <p id="h_couche"></p>
+        </div>
+      </article>
+      <article>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Recherchez une ville"
+        />
+        <button id="search-button">Rechercher</button>
+      </article>
+    </main>
   </body>
 </html>

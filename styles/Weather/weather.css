@@ -1,125 +1,132 @@
 /* Variables CSS pour des personnalisations faciles */
 :root {
-    --primary-color: #0077b6;
-    --secondary-color: #90e0ef;
-    --background-color: #f5f5f5;
-    --text-color: #333;
-    --font-family: 'Arial', sans-serif;
-  }
-  
-  /* Réinitialisation des styles par défaut pour une base propre */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    height: 100vh;
-    font-family: var(--font-family);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    padding: 20px;
-    background-image: url("../../assets/Weather/background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  
-  main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  /* Style des articles */
+  --primary-color: #0077b6;
+  --secondary-color: #90e0ef;
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --font-family: "Arial", sans-serif;
+}
+
+/* Réinitialisation des styles par défaut pour une base propre */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  padding: 20px;
+  background-image: url("../../assets/Weather/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Style des articles */
+article {
+  background: white;
+  opacity: 0.5;
+  border: 1px solid var(--secondary-color);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+article image {
+  width: 150px;
+  height: 150px;
+}
+
+article h1,
+article h2 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+article ul {
+  list-style: none;
+  margin-top: 15px;
+}
+
+article ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+article ul li img {
+  width: 72px;
+  height: 72px;
+  margin-right: 10px;
+}
+
+article ul li p {
+  font-size: 1rem;
+}
+
+/* Style spécifique au cadran solaire */
+#cadran_solaire {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px dashed var(--primary-color);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+#aiguille {
+  width: 50px;
+  height: 50px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#aiguille span {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Réactivité */
+@media (max-width: 768px) {
   article {
-    background: white;
-    opacity: .5;
-    border: 1px solid var(--secondary-color);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 90%;
   }
-  
-  article:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 480px) {
+  article h1,
+  article h2 {
+    font-size: 1.2rem;
   }
-  
-  article h1, article h2 {
-    margin-bottom: 10px;
-    color: var(--primary-color);
-    font-size: 1.5rem;
-  }
-  
-  article ul {
-    list-style: none;
-    margin-top: 15px;
-  }
-  
-  article ul li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  article ul li img {
-    width: 72px;
-    height: 72px;
-    margin-right: 10px;
-  }
-  
+
   article ul li p {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
-  
-  /* Style spécifique au cadran solaire */
-  #cadran_solaire {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px dashed var(--primary-color);
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  #aiguille {
-    width: 50px;
-    height: 50px;
-    background: var(--secondary-color);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #aiguille span {
-    color: white;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-  
-  /* Réactivité */
-  @media (max-width: 768px) {
-    article {
-      max-width: 90%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    article h1, article h2 {
-      font-size: 1.2rem;
-    }
-  
-    article ul li p {
-      font-size: 0.9rem;
-    }
-  }
-  
+}

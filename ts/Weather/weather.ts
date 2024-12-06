@@ -1,9 +1,11 @@
 declare const Swal: any;
+
 class WeatherApp {
   private donnees: {
     apiKey: string;
     latitude: number;
     longitude: number;
+    timezone: number; // Décalage en secondes par rapport à UTC
     date: {
       annee: number;
       mois: number | string;
@@ -17,12 +19,14 @@ class WeatherApp {
       couche: Date | number;
     };
   };
+  
 
   constructor(apiKey: string) {
     this.donnees = {
       apiKey,
       latitude: 0,
       longitude: 0,
+      timezone: 0,
       date: {
         annee: 0,
         mois: 0,
@@ -37,7 +41,8 @@ class WeatherApp {
       },
     };
 
-    setInterval(() => this.updateTimeDisplay(), 500);
+    setInterval(() => this.updateLocalTime(), 1000);
+    this.setupSearchHandler();
   }
 
   private updateTimeDisplay() {
@@ -56,7 +61,6 @@ class WeatherApp {
     this.donnees.date.minutes = date.getMinutes();
     this.donnees.date.secondes = date.getSeconds();
 
-    // Beautification
     this.donnees.date.mois =
       this.donnees.date.mois < 10
         ? `0${this.donnees.date.mois}`
@@ -87,7 +91,7 @@ class WeatherApp {
 
   public getWeatherNow() {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${this.donnees.latitude}&lon=${this.donnees.longitude}&appid=${this.donnees.apiKey}&units=metric&lang=fr`;
-
+  
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data: any) => {
@@ -100,7 +104,7 @@ class WeatherApp {
         document.getElementById("description")!.textContent =
           data.weather[0].description[0].toUpperCase() +
           data.weather[0].description.substr(1);
-
+  
         const icon = data.weather[0].icon;
         document.title = `Météo - ${data.name}`;
         document
@@ -109,21 +113,46 @@ class WeatherApp {
             "src",
             `https://openweathermap.org/img/wn/${icon}@2x.png`
           );
-
+  
         this.donnees.soleil.leve = new Date(data.sys.sunrise * 1000);
         this.donnees.soleil.couche = new Date(data.sys.sunset * 1000);
-
+  
         document.getElementById(
           "h_leve"
         )!.textContent = `${this.donnees.soleil.leve.getHours()}:${this.donnees.soleil.leve.getMinutes()}`;
         document.getElementById(
           "h_couche"
         )!.textContent = `${this.donnees.soleil.couche.getHours()}:${this.donnees.soleil.couche.getMinutes()}`;
-
+  
+        // Stockez le timezone pour ajuster l'heure locale
+        this.donnees.timezone = data.timezone;
+  
         this.updateSunPosition();
+        this.updateLocalTime(); // Mettez à jour l'heure locale
       })
       .catch((error) => console.error("Error fetching weather data:", error));
   }
+
+  private updateLocalTime() {
+    const currentTime = new Date();
+    
+    // Décalage local en millisecondes
+    const localOffset = this.donnees.timezone * 1000;
+  
+    // Ajustez l'heure à partir d'UTC
+    const localTime = new Date(currentTime.getTime() + localOffset);
+  
+    // Formatez l'heure
+    const hours = localTime.getUTCHours().toString().padStart(2, "0");
+    const minutes = localTime.getUTCMinutes().toString().padStart(2, "0");
+    const seconds = localTime.getUTCSeconds().toString().padStart(2, "0");
+  
+    // Affichez l'heure locale
+    const timeActElement = document.getElementById("time-act");
+    if (timeActElement) {
+      timeActElement.textContent = `${hours} : ${minutes} : ${seconds}`;
+    }
+  }  
 
   public getWeatherForecast() {
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${this.donnees.latitude}&lon=${this.donnees.longitude}&appid=${this.donnees.apiKey}&units=metric&cnt=8&lang=fr`;
@@ -168,6 +197,77 @@ class WeatherApp {
     }
   }
 
+  /**
+   * Météo a partir du nom
+   * @param city 
+   */
+  public searchCityWeather(city: string) {
+    const apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${this.donnees.apiKey}`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data: any) => {
+        if (data.length > 0) {
+          this.donnees.latitude = data[0].lat;
+          this.donnees.longitude = data[0].lon;
+          this.getWeatherNow();
+          this.getWeatherForecast();
+        } else {
+          Swal.fire({
+            title: "Erreur",
+            text: "Ville introuvable.",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      })
+      .catch((error) => console.error("Error searching city:", error));
+  }
+
+  /**
+   * Pour la recherche de ville
+   */
+  private setupSearchHandler() {
+    const searchButton = document.getElementById("search-button");
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+  
+    if (searchButton && searchInput) {
+      // Gestionnaire pour le clic sur le bouton
+      searchButton.addEventListener("click", () => {
+        const city = searchInput.value.trim();
+        if (city) {
+          this.searchCityWeather(city);
+        } else {
+          Swal.fire({
+            title: "Erreur",
+            text: "Veuillez entrer une ville.",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      });
+  
+      // Gestionnaire pour appuyer sur "Entree"
+      searchInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          const city = searchInput.value.trim();
+          if (city) {
+            this.searchCityWeather(city);
+          } else {
+            // Swal parceque c'est jolie
+            Swal.fire({
+              title: "Erreur",
+              text: "Veuillez entrer une ville.",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          }
+        }
+      });
+    }
+  }
+  
+
   public getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -180,7 +280,7 @@ class WeatherApp {
         (error) => {
           console.error("Error getting location:", error);
           Swal.fire({
-            title: "Error!",
+            title: "Erreur!",
             text: "La géolocalisation n'est pas supportée et/ou autorisée.",
             icon: "error",
             confirmButtonText: "Je comprend",
@@ -194,7 +294,6 @@ class WeatherApp {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Utilisation de la classe
   const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994");
   app.getLocation();
 });
