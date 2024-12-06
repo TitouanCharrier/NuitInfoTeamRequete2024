@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/TitouanCharrier/NuitInfoTeamRequete2024#readme",
   "dependencies": {
+    "sweetalert2": "^11.14.5",
     "typescript": "^5.7.2"
   }
 }

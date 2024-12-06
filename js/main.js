@@ -1,4 +1,5 @@
 "use strict";
+<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", () => {
     let head = document.getElementsByClassName("head")[0];
     let cheast = document.getElementsByClassName("cheast")[0];
@@ -144,3 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
         body.style.display = 'block';
     });
 });
+=======
+console.log("Hello World!");
+>>>>>>> origin/Weather
