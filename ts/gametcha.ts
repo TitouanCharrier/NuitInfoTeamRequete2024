@@ -77,7 +77,7 @@ export default class Gametcha {
     // Fading at the end
     private endLoop() {
         // Fades for 1 second
-        if (this.frameCount++ < 60) window.requestAnimationFrame(this.endLoop.bind(this));
+        if (this.frameCount++ < 180) window.requestAnimationFrame(this.endLoop.bind(this));
         else {
             this.hide();
         }
@@ -85,10 +85,10 @@ export default class Gametcha {
         let fillColor: string;
         // Fades to black if the player died, fades to white otherwise
         if (!this.isHuman) {
-            fillColor = Math.floor(255 - (this.frameCount * 255 / 60)).toString(16);
+            fillColor = Math.floor(255 - (this.frameCount * 255 / 180)).toString(16);
         }
         else {
-            fillColor = Math.floor(this.frameCount * 255 / 60).toString(16);
+            fillColor = Math.floor(this.frameCount * 255 / 180).toString(16);
         }
         if (fillColor.length === 1) fillColor = "0" + fillColor;
         this.context.fillStyle = "#" + fillColor.repeat(3);
