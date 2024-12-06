@@ -69,6 +69,8 @@ gametcha.show();
 export default class Combat {
     canvas;
     context;
+    mode;
+    selected;
     constructor() {
         this.canvas = gametcha.canvas;
         let _context = this.canvas.getContext("2d");
@@ -80,12 +82,28 @@ export default class Combat {
         this.context.strokeStyle = 'black';
         this.context.lineWidth = 1;
         this.loop();
+        this.mode = true;
+        this.selected = 1;
     }
     getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
     start() {
         requestAnimationFrame(this.loop.bind(this));
+    }
+    button(pos_x, pos_y, width, height, text, selected) {
+        if (selected) {
+            this.context.fillStyle = '#58eb34';
+            this.context.fillRect(pos_x, pos_y, width, height);
+            this.context.fillStyle = '#000000';
+            this.context.fillText(text, pos_x + width * 0.5, pos_y + height * 0.6);
+        }
+        else {
+            this.context.fillStyle = '#bd0d00';
+            this.context.fillRect(pos_x, pos_y, width, height);
+            this.context.fillStyle = '#000000';
+            this.context.fillText(text, pos_x + width * 0.5, pos_y + height * 0.6);
+        }
     }
     loop() {
         // draw background
@@ -116,15 +134,66 @@ export default class Combat {
         this.context.fillStyle = '#bd0d00';
         this.context.textAlign = 'center';
         this.context.font = '25px arial';
-        this.context.fillRect(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height);
-        this.context.fillRect(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height);
-        this.context.fillRect(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height);
-        this.context.fillRect(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height);
-        this.context.fillStyle = '#000000';
-        this.context.fillText("Attack", sub_rect_pos_x_1 + sub_rect_width * 0.5, sub_rect_pos_y_1 + sub_rect_height * 0.6);
-        this.context.fillText("Pokemon", sub_rect_pos_x_2 + sub_rect_width * 0.5, sub_rect_pos_y_2 + sub_rect_height * 0.6);
-        this.context.fillText("Bag", sub_rect_pos_x_3 + sub_rect_width * 0.5, sub_rect_pos_y_3 + sub_rect_height * 0.6);
-        this.context.fillText("Run", sub_rect_pos_x_4 + sub_rect_width * 0.5, sub_rect_pos_y_4 + sub_rect_height * 0.6);
+        switch (this.selected) {
+            case 1: {
+                if (this.mode) {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "Attack", true);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "Pokemon", false);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "Bag", false);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "Run", false);
+                }
+                else {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "ATK1", true);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "ATK2", false);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "ATK3", false);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "ATK4", false);
+                }
+            }
+            case 2: {
+                if (this.mode) {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "Attack", false);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "Pokemon", true);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "Bag", false);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "Run", false);
+                }
+                else {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "ATK1", false);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "ATK2", true);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "ATK3", false);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "ATK4", false);
+                }
+            }
+            case 3: {
+                if (this.mode) {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "Attack", false);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "Pokemon", false);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "Bag", true);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "Run", false);
+                }
+                else {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "ATK1", false);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "ATK2", false);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "ATK3", true);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "ATK4", false);
+                }
+            }
+            case 4: {
+                if (this.mode) {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "Attack", false);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "Pokemon", false);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "Bag", false);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "Run", true);
+                }
+                else {
+                    this.button(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height, "ATK1", false);
+                    this.button(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height, "ATK2", false);
+                    this.button(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height, "ATK3", false);
+                    this.button(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height, "ATK4", true);
+                }
+            }
+        }
+        this.canvas.addEventListener('click', function () { }, false);
         requestAnimationFrame(this.loop.bind(this));
+        console.log(this.selected);
     }
 }
