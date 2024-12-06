@@ -1,22 +1,17 @@
 import Player from "./Player.js";
-import Entity from "./Entity.js";
-import Gametcha from "./gametcha.js";
 import Block from "./Block.js";
-import MovementKey from "./MovementKey.js";
-
 export default class GameWindow {
-    public blocks: Block[] = [];
-    public map: number[][];
-    public player: Player = new Player();
-    private _tileHeight: number;
-    private _tileWidth: number;
-    public gameOn: boolean = true;
-    private _window: Gametcha;
-    private _context: CanvasRenderingContext2D;
-    public tileSize: number = 50;
-    private _movementKeys: MovementKey[];
-
-    public constructor(gametcha: Gametcha) {
+    blocks = [];
+    map;
+    player = new Player();
+    _tileHeight;
+    _tileWidth;
+    gameOn = true;
+    _window;
+    _context;
+    tileSize = 50;
+    _movementKeys;
+    constructor(gametcha) {
         this.map = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,51 +27,38 @@ export default class GameWindow {
         this._mappingBlocks();
         Block.tileSet = document.createElement("img");
         Block.tileSet.src = Block.tilePath;
-    
         this._tileHeight = 15;
         this._tileWidth = 15;
         this._window = gametcha;
         let context = this._window.canvas.getContext("2d");
-        
         if (context === null)
             throw new Error("Gametcha canvas context is null");
-            
         this._context = context;
-
-        this._movementKeys = []
-        this._movementKeys.push(
-            {code: "ArrowUp", state: false},   // Up arrow
-            {code: "ArrowLeft", state: false},   // Left arrow
-            {code: "ArrowDown", state: false},   // Down arrow
-            {code: "ArrowRight", state: false},   // right arrow
-        );
+        this._movementKeys = [];
+        this._movementKeys.push({ code: "ArrowUp", state: false }, // Up arrow
+        { code: "ArrowLeft", state: false }, // Left arrow
+        { code: "ArrowDown", state: false }, // Down arrow
+        { code: "ArrowRight", state: false });
         window.addEventListener("keydown", this.keyPressAction.bind(this));
         window.addEventListener("keyup", this.keyPressAction.bind(this));
-
         this.game();
     }
-
-    public start() {
+    start() {
         window.requestAnimationFrame(this.game.bind(this));
     }
-
-    private keyPressAction(event: KeyboardEvent) {
-        this._movementKeys.forEach((movementKey: MovementKey) => {
+    keyPressAction(event) {
+        this._movementKeys.forEach((movementKey) => {
             if (event.code === movementKey.code) {
                 movementKey.state = event.type === "keydown";
             }
         });
     }
-
-    public game() {
-
-        if (this.gameOn) window.requestAnimationFrame(this.game.bind(this));
-
+    game() {
+        if (this.gameOn)
+            window.requestAnimationFrame(this.game.bind(this));
         this.draw();
-
         this.detectCollision();
-
-        let anyKey : boolean = false;
+        let anyKey = false;
         this._movementKeys.forEach(e => {
             if (e.state) {
                 anyKey = true;
@@ -91,24 +73,20 @@ export default class GameWindow {
                 }
             }
         });
-        if (!anyKey) this.player.moveStop();
-
+        if (!anyKey)
+            this.player.moveStop();
         this.player.updatePosX();
         this.player.updatePosY();
         console.log(this.player.getPosY());
     }
-
-    private draw() {
+    draw() {
         this._context.clearRect(0, 0, this._window.canvas.width, this._window.canvas.height);
-
-        this.blocks.forEach( e => {
-            this._context.drawImage(Block.tileSet,e.tileX, e.tileY, this.tileSize, this.tileSize, e.getPosX(), e.getPosY(), this.tileSize, this.tileSize);
+        this.blocks.forEach(e => {
+            this._context.drawImage(Block.tileSet, e.tileX, e.tileY, this.tileSize, this.tileSize, e.getPosX(), e.getPosY(), this.tileSize, this.tileSize);
         });
-
         this._context.drawImage(this.player.tileSet, this.player.tileX, this.player.tileY, this.tileSize, this.tileSize, this.player.getPosX(), this.player.getPosY(), this.tileSize, this.tileSize);
     }
-
-    public detectCollision() {
+    detectCollision() {
         this.player.canGoLeft = true;
         this.player.canGoRight = true;
         this.blocks.forEach(e => {
@@ -117,27 +95,25 @@ export default class GameWindow {
                     //console.log("Y check");
                     if ((e.getPosX() - (this.player.getPosX() + this.tileSize)) <= 0 && ((e.getPosX() + this.tileSize) - (this.player.getPosX())) >= 0) {
                         this.player.grounding((e.getPosY() - this.tileSize));
-                    // console.log("grounding");
+                        // console.log("grounding");
                     }
                 }
                 else {
                     this.player.ungrounding();
                     //console.log("ungrounding");
                 }
-
                 // Collision axe X vers la droite
-                if ((e.getPosX() - (this.player.getPosX() + this.tileSize)) < 0) {   
-                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0 )) {
+                if ((e.getPosX() - (this.player.getPosX() + this.tileSize)) < 0) {
+                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0)) {
                         this.player.canGoRight = false;
                         console.log("collision");
                         /*if (this.player.getXvelocity() > 0)
                             this.player.block(e.getPosX() - this.tileSize);*/
                     }
                 }
-
                 // Collision axe X vers la gauche
-                else if (((e.getPosX() + this.tileSize) - this.player.getPosX()) > 0) {   
-                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize )) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0 )) {
+                else if (((e.getPosX() + this.tileSize) - this.player.getPosX()) > 0) {
+                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0)) {
                         this.player.canGoLeft = false;
                         console.log("collision : (" + e.getPosY() + ", " + (e.getPosY() + this.tileSize) + ")");
                         /*if (this.player.getXvelocity() < 0)
@@ -147,8 +123,7 @@ export default class GameWindow {
             }
         });
     }
-
-    private _mappingBlocks() {
+    _mappingBlocks() {
         let x = 0;
         let y = 0;
         this.map.forEach(e => {
@@ -158,9 +133,9 @@ export default class GameWindow {
                 else if (e === 1)
                     this.blocks.push(new Block(x, y, 0, 0, 1, true, 250, 0));
                 else if (e === 2)
-                    this.blocks.push(new Block(x, y, 0, 0, 1, true, 350, 0))
+                    this.blocks.push(new Block(x, y, 0, 0, 1, true, 350, 0));
                 x += this.tileSize;
-            }); 
+            });
             y += this.tileSize;
             x = 0;
         });

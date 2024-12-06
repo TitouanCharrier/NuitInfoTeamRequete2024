@@ -1,5 +1,3 @@
-import Tile from "./Tile";
-
 export default abstract class Entity {
     protected _posX: number;
     protected _posY: number;
