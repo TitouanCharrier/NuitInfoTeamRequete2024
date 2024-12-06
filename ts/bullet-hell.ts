@@ -114,8 +114,8 @@ export default class BulletHell {
         let p: Projectile = {
             x: 0,
             y: 0,
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             damage: 1,
             spX: 0,
             spY: 0,
@@ -158,20 +158,22 @@ export default class BulletHell {
     }
 
     private loop() {
-        // Stop the game after 15 seconds
-        if (this.frameCount++ === 900) this.gameRunning = false;
+        // Stop the game after 15 seconds or when the player's health reaches 0
+        if (this.frameCount++ === 900 || this.player.health <= 0) this.gameRunning = false;
         // Stop requesting the animation after 15 seconds
         if (this.gameRunning) window.requestAnimationFrame(this.loop.bind(this));
         else {
             this.frameCount = 0;
             window.requestAnimationFrame(this.endLoop.bind(this));
         }
-        // Add a projectile every half second
-        if (this.frameCount % 15 === 0) this.addRandomProjectile();
+        // Add a projectile every 23 frames
+        if (this.frameCount % 23 === 0) this.addRandomProjectile();
 
         /// Physics handling
+        // Lower the damage cooldown (inv frames)
         if (this.player.dmgCooldown > 0) this.player.dmgCooldown--;
 
+        // Move the player if needed
         this.movementKeys.forEach((mKey: MovementKey) => {
             if (mKey.state) {
                 this.player.x += mKey.xMovement;
@@ -188,7 +190,7 @@ export default class BulletHell {
             p.y += p.spY;
 
             // Check if the projectile is outside the game screen
-            if (p.x <= 0 || p.y <= 0 || p.x >= this.gameScreen.w || p.y >= this.gameScreen.h)
+            if (p.x + p.width <= 0 || p.y + p.height <= 0 || p.x >= this.gameScreen.w || p.y >= this.gameScreen.h)
                 arr.splice(i, 1);
 
             // Collision checks with the player
@@ -218,18 +220,28 @@ export default class BulletHell {
         this.context.fillRect(this.uiScreen.x + 20, this.uiScreen.y + 20, (this.uiScreen.w - 40) * this.player.health / this.player.maxHealth, this.uiScreen.h - 40);
         this.context.fillStyle = "#000000";
 
+        // Projectiles and player randering
         this.drawElt(this.player);
         this.projectiles.forEach((p: Projectile) => {
             this.drawElt(p);
         })
     }
 
+    // Fading at the end
     private endLoop() {
+        // Fades for 1 second
         if (this.frameCount++ < 60) window.requestAnimationFrame(this.endLoop.bind(this));
-        let fillColor = Math.floor(this.frameCount * 255 / 60).toString(16);
+        // Change the fill color according to the time elapsed
+        let fillColor: string;
+        // Fades to black if the player died, fades to white otherwise
+        if (this.player.health <= 0) {
+            fillColor = Math.floor(255 - (this.frameCount * 255 / 60)).toString(16);
+        }
+        else {
+            fillColor = Math.floor(this.frameCount * 255 / 60).toString(16);
+        }
         if (fillColor.length === 1) fillColor = "0" + fillColor;
         this.context.fillStyle = "#" + fillColor.repeat(3);
         this.context.fillRect(0, 0, this.gametcha.canvas.width, this.gametcha.canvas.height);
     }
-
 }
