@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu de Cliqueur avec Molette</title>
+  <link rel="stylesheet" href="../styles/CookieCauchemar.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">RACE FOR WATER</div>
+    <nav class="menu">
+        <a href="#">Cookie Cauchemard</a>
+        <a href="./Ergonomie.html">L'ergonomie</a>
+        <a href="#">Catch them all</a>
+        <a href="#">Game-tcha</a>
+        <a href="./weather.html">SFEIR-Météo</a>
+    </nav>
+  </header>
+  <div class="game-container">
+    <h1>Jeu de Cliqueur avec Molette</h1>
+    <p>Points Gagnés: <span id="score">0</span></p>
+    <p>Points Perdus: <span id="lost-points">0</span></p> <!-- Nouvelle ligne pour les points perdus -->
+    <div class="image-container">
+      <img src="poubelle.png" alt="Cliquez avec la molette" id="clickable-image">
+    </div>
+    <p>Bots Positifs : <span id="positive-bots">0</span></p>
+    <p>Bots Négatifs : <span id="negative-bots">0</span></p>
+    <button id="reset-button">Réinitialiser</button>
+  </div>
+
+  <!-- Popup pour l'achat du bot -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <p>Voulez-vous acheter un bot pour <span id="bot-price">50</span> points ?</p>
+      <button id="buy-bot">Acheter</button>
+      <button id="cancel-bot">Annuler</button>
+    </div>
+  </div>
+
+  <!-- Boîte à gauche pour les augmentations de la molette -->
+  <div id="upgrade-box" class="upgrade-box">
+    <h2>Augmentations de la Molette</h2>
+    <p>Niveau actuel : <span id="current-level">1</span></p>
+    <p>Multiplicateur : <span id="multiplier">1x</span></p>
+    <p>Prix : <span id="upgrade-price">50</span> points</p>
+    <button id="buy-upgrade">Acheter Augmentation</button>
+  </div>
+
+  
+
+  <script src="../js/CookieCauchemar.js"></script>
+</body>
+</html>
