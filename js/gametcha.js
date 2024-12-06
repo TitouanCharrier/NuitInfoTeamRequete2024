@@ -5,6 +5,7 @@ export default class Gametcha {
     isHuman;
     context;
     intervalId;
+    // private validationImg: HTMLImageElement;
     callback;
     constructor(callback) {
         this.callback = callback;
@@ -64,6 +65,7 @@ export default class Gametcha {
             clearInterval(this.intervalId);
             this.intervalId = -1;
             document.body.removeChild(this.div);
+            this.callback(this.isHuman);
         }
     }
     show() {
@@ -103,6 +105,7 @@ export default class Gametcha {
         if (!this.isHuman) {
             this.context.textAlign = "center";
             this.context.fillStyle = "#ffffff";
+            // this.context.drawImage()
             this.context.fillText("Vous n'êtes pas humain.", this.canvas.width / 2, this.canvas.height / 2);
         }
         else {

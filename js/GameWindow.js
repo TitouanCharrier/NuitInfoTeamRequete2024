@@ -104,9 +104,11 @@ export default class GameWindow {
         this.player.updatePosX();
         this.player.updatePosY();
         if (this.player.getPosY() + this.tileSize >= this._window.canvas.height) {
+            this.gameOn = false;
             this._window.validate(false);
         }
         if (this.player.getPosX() + this.tileSize >= (22 * this.tileSize)) {
+            this.gameOn = false;
             this._window.validate(true);
         }
     }
