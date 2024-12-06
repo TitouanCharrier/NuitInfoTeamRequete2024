@@ -1,11 +1,23 @@
 declare const Swal: any;
 
+const backgrounds = {
+  jour: {
+    degage: "bg_light.jpg",
+    nuage: "bg_cloud.jpg",
+  },
+  nuit: {
+    degage: "background.jpg",
+    nuage: "bg_night.jpg",
+  },
+};
+
+
 class WeatherApp {
   private donnees: {
     apiKey: string;
     latitude: number;
     longitude: number;
-    timezone: number; // Décalage en secondes par rapport à UTC
+    timezone: number;
     date: {
       annee: number;
       mois: number | string;
@@ -13,6 +25,10 @@ class WeatherApp {
       heures: number | string;
       minutes: number | string;
       secondes: number | string;
+    };
+    soleil: {
+      leve: Date | number;
+      couche: Date | number;
     };
   };
   
@@ -30,13 +46,18 @@ class WeatherApp {
         heures: 0,
         minutes: 0,
         secondes: 0,
-      }
+      },
+      soleil: {
+        leve: 0,
+        couche: 0,
+      },
     };
 
     setInterval(() => this.updateLocalTime(), 1000);
     this.setupSearchHandler();
   }
 
+  //formate le temps
   private updateTimeDisplay() {
     const timeActElement = document.getElementById("time-act");
     if (timeActElement) {
@@ -81,6 +102,42 @@ class WeatherApp {
     ];
   }
 
+  /**
+   * Background en fonction du temps
+   */
+  private updateBackground() {
+    const currentTime = new Date();
+    const sunrise = this.donnees.soleil.leve as Date;
+    const sunset = this.donnees.soleil.couche as Date;
+  
+    const isDaytime = currentTime >= sunrise && currentTime < sunset;
+  
+    const weatherDescription = document
+      .getElementById("description")!
+      .textContent!.toLowerCase();
+  
+    let skyCondition: "degage" | "nuage";
+  
+    if (weatherDescription.includes("clair") || weatherDescription.includes("dégagé")) {
+      skyCondition = "degage";
+    } else if (weatherDescription.includes("nuage")) {
+      skyCondition = "nuage";
+    } else {
+      skyCondition = "nuage";
+    }
+  
+    const backgroundKey = isDaytime ? "jour" : "nuit";
+    const backgroundImage = backgrounds[backgroundKey][skyCondition];
+  
+    document.body.style.backgroundImage = `url(../../assets/Weather/${backgroundImage})`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+  }
+  
+
+  /**
+   * Meteo actuel
+   */
   public getWeatherNow() {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${this.donnees.latitude}&lon=${this.donnees.longitude}&appid=${this.donnees.apiKey}&units=metric&lang=fr`;
   
@@ -105,29 +162,32 @@ class WeatherApp {
             "src",
             `https://openweathermap.org/img/wn/${icon}@2x.png`
           );
+  
+        this.donnees.soleil.leve = new Date(data.sys.sunrise * 1000);
+        this.donnees.soleil.couche = new Date(data.sys.sunset * 1000);
 
         this.donnees.timezone = data.timezone;
-  
+          
+        this.updateBackground();
         this.updateLocalTime();
       })
       .catch((error) => console.error("Error fetching weather data:", error));
   }
 
+  /**
+   * Gestion des timezone
+   */
   private updateLocalTime() {
     const currentTime = new Date();
     
-    // Décalage local en millisecondes
     const localOffset = this.donnees.timezone * 1000;
   
-    // Ajustez l'heure à partir d'UTC
     const localTime = new Date(currentTime.getTime() + localOffset);
-  
-    // Formatez l'heure
+
     const hours = localTime.getUTCHours().toString().padStart(2, "0");
     const minutes = localTime.getUTCMinutes().toString().padStart(2, "0");
     const seconds = localTime.getUTCSeconds().toString().padStart(2, "0");
   
-    // Affichez l'heure locale
     const timeActElement = document.getElementById("time-act");
     if (timeActElement) {
       timeActElement.textContent = `${hours} : ${minutes} : ${seconds}`;
