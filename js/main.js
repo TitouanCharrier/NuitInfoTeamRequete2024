@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import Gametcha from "./gametcha.js";
-import GameWindow from "./GameWindow.js";
-let gametcha = new Gametcha((res) => { console.log(res); });
-gametcha.show();
-let game = new GameWindow(gametcha);
-/*
-let bh = new BulletHell(gametcha);
-bh.start();*/ 
-=======
 "use strict";
 document.addEventListener("DOMContentLoaded", () => {
     let head = document.getElementsByClassName("head")[0];
@@ -154,4 +144,3 @@ document.addEventListener("DOMContentLoaded", () => {
         body.style.display = 'block';
     });
 });
->>>>>>> main
