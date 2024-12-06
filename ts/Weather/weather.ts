@@ -181,21 +181,38 @@ class WeatherApp {
       });
   }
 
+  /**
+   * Gestion du cadrant solaire
+   */
   private updateSunPosition() {
-    const act = new Date();
-    if (act < this.donnees.soleil.leve || act > this.donnees.soleil.couche) {
-      document.getElementById("aiguille")!.style.opacity = "0";
-    } else {
-      const heure =
-        act.getHours() - (this.donnees.soleil.leve as Date).getHours();
-      const minute =
-        act.getMinutes() - (this.donnees.soleil.leve as Date).getMinutes();
-      const tot = heure * 60 + minute;
-      document.getElementById("aiguille")!.style.transform = `rotate(${
-        -20 + (tot % 180)
-      }deg)`;
+    const currentTime = new Date();
+    const sunrise = this.donnees.soleil.leve as Date;
+    const sunset = this.donnees.soleil.couche as Date;
+  
+    const sunriseTime = sunrise.getTime();
+    const sunsetTime = sunset.getTime();
+    const currentTimeValue = currentTime.getTime();
+  
+    let angle = 0;
+  
+    if (currentTimeValue >= sunriseTime && currentTimeValue <= sunsetTime) {
+      const totalDaylightMinutes = (sunsetTime - sunriseTime) / 60000;
+      const elapsedMinutes = (currentTimeValue - sunriseTime) / 60000;
+  
+      angle = (elapsedMinutes / totalDaylightMinutes) * 180;
+    } else if (currentTimeValue > sunsetTime) {
+      angle = 180;
+    } else if (currentTimeValue < sunriseTime) {
+      angle = 0;
+    }
+  
+    const needle = document.getElementById("aiguille");
+    if (needle) {
+      needle.style.transform = `rotate(${angle}deg)`;
+      needle.style.opacity = "1";
     }
   }
+  
 
   /**
    * Météo a partir du nom
@@ -232,7 +249,6 @@ class WeatherApp {
     const searchInput = document.getElementById("search-input") as HTMLInputElement;
   
     if (searchButton && searchInput) {
-      // Gestionnaire pour le clic sur le bouton
       searchButton.addEventListener("click", () => {
         const city = searchInput.value.trim();
         if (city) {
@@ -247,7 +263,6 @@ class WeatherApp {
         }
       });
   
-      // Gestionnaire pour appuyer sur "Entree"
       searchInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           const city = searchInput.value.trim();
@@ -267,7 +282,9 @@ class WeatherApp {
     }
   }
   
-
+  /**
+   * Récuperer la position actuel du client
+   */
   public getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -293,7 +310,10 @@ class WeatherApp {
   }
 }
 
+/**
+ * Necessite que tous les elem html soit chargé
+ */
 document.addEventListener("DOMContentLoaded", () => {
-  const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994");
+  const app = new WeatherApp("93f4f2f761fd03a1c2b9fb32651a6994"); //Clé perso faite pas de la merde
   app.getLocation();
 });
