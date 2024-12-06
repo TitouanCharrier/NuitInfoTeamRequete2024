@@ -3,17 +3,17 @@ import * as attacks_json from "./attacks_json.js"
 import * as pokemons_json from "./pokemon_json.js"
 
 
-interface Attack_struct{
+interface Attack_struct {
     name: string;
     type: string;
     categorie: string;
     power: number;
     precision: number;
     priority: number;
-    pp : number;
+    pp: number;
 }
 
-interface Pokemon_struct{
+interface Pokemon_struct {
     sprite: string;
     name: string;
     type: string;
@@ -27,35 +27,35 @@ interface Pokemon_struct{
 class Attack {
     private attack_struct: Attack_struct;
 
-    public constructor(attack_struct: Attack_struct){
+    public constructor(attack_struct: Attack_struct) {
         this.attack_struct = attack_struct;
     }
 
-    public getName(){
+    public getName() {
         return this.attack_struct.name;
     }
 
-    public getType(){
+    public getType() {
         return this.attack_struct.type;
     }
 
-    public getCategorie(){
+    public getCategorie() {
         return this.attack_struct.categorie;
     }
 
-    public getPriority(){
+    public getPriority() {
         return this.attack_struct.priority;
     }
 
-    public getPP(){
+    public getPP() {
         return this.attack_struct.pp;
     }
 
-    public getPower(){
+    public getPower() {
         return this.attack_struct.power;
     }
 
-    public getPrecision(){
+    public getPrecision() {
         return this.attack_struct.precision;
     }
 }
@@ -63,35 +63,35 @@ class Attack {
 class Pokemon {
     private pokemon_struct: Pokemon_struct;
 
-    public constructor(pokemon_struct: Pokemon_struct){
+    public constructor(pokemon_struct: Pokemon_struct) {
         this.pokemon_struct = pokemon_struct;
     }
 
-    public getName(){
+    public getName() {
         return this.pokemon_struct.name;
     }
 
-    public getType(){
+    public getType() {
         return this.pokemon_struct.type;
     }
 
-    public getHP(){
+    public getHP() {
         return this.pokemon_struct.HP;
     }
 
-    public getAtk(){
+    public getAtk() {
         return this.pokemon_struct.Atk;
     }
 
-    public getSpeAtk(){
+    public getSpeAtk() {
         return this.pokemon_struct.SpeAtk;
     }
 
-    public getDef(){
+    public getDef() {
         return this.pokemon_struct.Def;
     }
 
-    public getSpeed(){
+    public getSpeed() {
         return this.pokemon_struct.Speed;
     }
 }
@@ -135,11 +135,47 @@ export default class Combat {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
         // draw button
         this.context.fillStyle = '#eeaa00';
-        this.context.fillRect(220, 100, 200, 75);
-        this.context.fillStyle = '#001122';
+        let main_rect_pos_x = this.canvas.width * 0.1 * 0.5;
+        let main_rect_width = this.canvas.width * 0.9;
+        let main_rect_height = this.canvas.height * 0.3;
+        let main_rect_pos_y = this.canvas.height - 10 - this.canvas.height * 0.3;
+        let sub_rect_padding = main_rect_width * 0.03;
+
+        this.context.fillRect(main_rect_pos_x, main_rect_pos_y, main_rect_width, main_rect_height);
+        main_rect_pos_x += sub_rect_padding;
+        main_rect_pos_y += sub_rect_padding;
+
+        let sub_rect_width = main_rect_width * 0.4;
+        let sub_rect_height = main_rect_height * 0.4;
+
+        let sub_rect_pos_x_1 = main_rect_pos_x;
+        let sub_rect_pos_y_1 = main_rect_pos_y;
+
+        let sub_rect_pos_x_2 = main_rect_pos_x + sub_rect_width + sub_rect_padding*4;
+        let sub_rect_pos_y_2 = main_rect_pos_y;
+
+        let sub_rect_pos_x_3 = main_rect_pos_x;
+        let sub_rect_pos_y_3 = main_rect_pos_y + sub_rect_height + sub_rect_padding;
+
+        let sub_rect_pos_x_4 = main_rect_pos_x + sub_rect_width + sub_rect_padding*4;
+        let sub_rect_pos_y_4 = main_rect_pos_y + sub_rect_height + sub_rect_padding;
+
+        main_rect_pos_x -= sub_rect_padding;
+        main_rect_pos_y -= sub_rect_padding;
+
+        this.context.fillStyle = '#bd0d00';
         this.context.textAlign = 'center';
         this.context.font = '25px arial';
-        this.context.fillText('Start Game', 320, 145, 200);
+        this.context.fillRect(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height);
+        this.context.fillRect(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height);
+        this.context.fillRect(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height);
+        this.context.fillRect(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height);
+
+        this.context.fillStyle = '#000000';
+        this.context.fillText("Attack", sub_rect_pos_x_1 + sub_rect_width*0.5, sub_rect_pos_y_1 + sub_rect_height*0.6);
+        this.context.fillText("Pokemon", sub_rect_pos_x_2 + sub_rect_width*0.5, sub_rect_pos_y_2 + sub_rect_height*0.6);
+        this.context.fillText("Bag", sub_rect_pos_x_3 + sub_rect_width*0.5, sub_rect_pos_y_3 + sub_rect_height*0.6);
+        this.context.fillText("Run", sub_rect_pos_x_4 + sub_rect_width*0.5, sub_rect_pos_y_4 + sub_rect_height*0.6);
         requestAnimationFrame(this.loop.bind(this));
     }
 }

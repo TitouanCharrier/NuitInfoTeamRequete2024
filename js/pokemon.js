@@ -93,11 +93,38 @@ export default class Combat {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
         // draw button
         this.context.fillStyle = '#eeaa00';
-        this.context.fillRect(220, 100, 200, 75);
-        this.context.fillStyle = '#001122';
+        let main_rect_pos_x = this.canvas.width * 0.1 * 0.5;
+        let main_rect_width = this.canvas.width * 0.9;
+        let main_rect_height = this.canvas.height * 0.3;
+        let main_rect_pos_y = this.canvas.height - 10 - this.canvas.height * 0.3;
+        let sub_rect_padding = main_rect_width * 0.03;
+        this.context.fillRect(main_rect_pos_x, main_rect_pos_y, main_rect_width, main_rect_height);
+        main_rect_pos_x += sub_rect_padding;
+        main_rect_pos_y += sub_rect_padding;
+        let sub_rect_width = main_rect_width * 0.4;
+        let sub_rect_height = main_rect_height * 0.4;
+        let sub_rect_pos_x_1 = main_rect_pos_x;
+        let sub_rect_pos_y_1 = main_rect_pos_y;
+        let sub_rect_pos_x_2 = main_rect_pos_x + sub_rect_width + sub_rect_padding * 4;
+        let sub_rect_pos_y_2 = main_rect_pos_y;
+        let sub_rect_pos_x_3 = main_rect_pos_x;
+        let sub_rect_pos_y_3 = main_rect_pos_y + sub_rect_height + sub_rect_padding;
+        let sub_rect_pos_x_4 = main_rect_pos_x + sub_rect_width + sub_rect_padding * 4;
+        let sub_rect_pos_y_4 = main_rect_pos_y + sub_rect_height + sub_rect_padding;
+        main_rect_pos_x -= sub_rect_padding;
+        main_rect_pos_y -= sub_rect_padding;
+        this.context.fillStyle = '#bd0d00';
         this.context.textAlign = 'center';
         this.context.font = '25px arial';
-        this.context.fillText('Start Game', 320, 145, 200);
+        this.context.fillRect(sub_rect_pos_x_1, sub_rect_pos_y_1, sub_rect_width, sub_rect_height);
+        this.context.fillRect(sub_rect_pos_x_2, sub_rect_pos_y_2, sub_rect_width, sub_rect_height);
+        this.context.fillRect(sub_rect_pos_x_3, sub_rect_pos_y_3, sub_rect_width, sub_rect_height);
+        this.context.fillRect(sub_rect_pos_x_4, sub_rect_pos_y_4, sub_rect_width, sub_rect_height);
+        this.context.fillStyle = '#000000';
+        this.context.fillText("Attack", sub_rect_pos_x_1 + sub_rect_width * 0.5, sub_rect_pos_y_1 + sub_rect_height * 0.6);
+        this.context.fillText("Pokemon", sub_rect_pos_x_2 + sub_rect_width * 0.5, sub_rect_pos_y_2 + sub_rect_height * 0.6);
+        this.context.fillText("Bag", sub_rect_pos_x_3 + sub_rect_width * 0.5, sub_rect_pos_y_3 + sub_rect_height * 0.6);
+        this.context.fillText("Run", sub_rect_pos_x_4 + sub_rect_width * 0.5, sub_rect_pos_y_4 + sub_rect_height * 0.6);
         requestAnimationFrame(this.loop.bind(this));
     }
 }
