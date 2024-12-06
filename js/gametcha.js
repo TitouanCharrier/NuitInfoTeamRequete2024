@@ -57,12 +57,16 @@ export default class Gametcha {
     }
     hide() {
         document.body.removeChild(this.canvas);
+        document.body.removeChild(this.div);
     }
     // Fading at the end
     endLoop() {
         // Fades for 1 second
         if (this.frameCount++ < 60)
             window.requestAnimationFrame(this.endLoop.bind(this));
+        else {
+            this.hide();
+        }
         // Change the fill color according to the time elapsed
         let fillColor;
         // Fades to black if the player died, fades to white otherwise

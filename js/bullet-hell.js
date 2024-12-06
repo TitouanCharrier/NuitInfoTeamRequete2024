@@ -64,8 +64,8 @@ export default class BulletHell {
         let p = {
             x: 0,
             y: 0,
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             damage: 1,
             spX: 0,
             spY: 0,
@@ -105,7 +105,7 @@ export default class BulletHell {
         }
     }
     loop() {
-        // Stop the game after 15 seconds
+        // Stop the game after 15 seconds or when the player's health reaches 0
         if (this.frameCount++ === 900 || this.player.health <= 0)
             this.gameRunning = false;
         // Stop requesting the animation after 15 seconds
@@ -113,14 +113,16 @@ export default class BulletHell {
             window.requestAnimationFrame(this.loop.bind(this));
         else {
             this.frameCount = 0;
-            window.requestAnimationFrame(this.endLoop.bind(this));
+            this.gametcha.validate(this.player.health > 0);
         }
         // Add a projectile every 23 frames
         if (this.frameCount % 23 === 0)
             this.addRandomProjectile();
         /// Physics handling
+        // Lower the damage cooldown (inv frames)
         if (this.player.dmgCooldown > 0)
             this.player.dmgCooldown--;
+        // Move the player if needed
         this.movementKeys.forEach((mKey) => {
             if (mKey.state) {
                 this.player.x += mKey.xMovement;
@@ -166,15 +168,20 @@ export default class BulletHell {
         this.context.fillStyle = "#ff0000";
         this.context.fillRect(this.uiScreen.x + 20, this.uiScreen.y + 20, (this.uiScreen.w - 40) * this.player.health / this.player.maxHealth, this.uiScreen.h - 40);
         this.context.fillStyle = "#000000";
+        // Projectiles and player randering
         this.drawElt(this.player);
         this.projectiles.forEach((p) => {
             this.drawElt(p);
         });
     }
+    // Fading at the end
     endLoop() {
+        // Fades for 1 second
         if (this.frameCount++ < 60)
             window.requestAnimationFrame(this.endLoop.bind(this));
+        // Change the fill color according to the time elapsed
         let fillColor;
+        // Fades to black if the player died, fades to white otherwise
         if (this.player.health <= 0) {
             fillColor = Math.floor(255 - (this.frameCount * 255 / 60)).toString(16);
         }

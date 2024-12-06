@@ -164,7 +164,7 @@ export default class BulletHell {
         if (this.gameRunning) window.requestAnimationFrame(this.loop.bind(this));
         else {
             this.frameCount = 0;
-            window.requestAnimationFrame(this.endLoop.bind(this));
+            this.gametcha.validate(this.player.health > 0);
         }
         // Add a projectile every 23 frames
         if (this.frameCount % 23 === 0) this.addRandomProjectile();
@@ -225,23 +225,5 @@ export default class BulletHell {
         this.projectiles.forEach((p: Projectile) => {
             this.drawElt(p);
         })
-    }
-
-    // Fading at the end
-    private endLoop() {
-        // Fades for 1 second
-        if (this.frameCount++ < 60) window.requestAnimationFrame(this.endLoop.bind(this));
-        // Change the fill color according to the time elapsed
-        let fillColor: string;
-        // Fades to black if the player died, fades to white otherwise
-        if (this.player.health <= 0) {
-            fillColor = Math.floor(255 - (this.frameCount * 255 / 60)).toString(16);
-        }
-        else {
-            fillColor = Math.floor(this.frameCount * 255 / 60).toString(16);
-        }
-        if (fillColor.length === 1) fillColor = "0" + fillColor;
-        this.context.fillStyle = "#" + fillColor.repeat(3);
-        this.context.fillRect(0, 0, this.gametcha.canvas.width, this.gametcha.canvas.height);
     }
 }
