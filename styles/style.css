@@ -4,6 +4,10 @@ body {
     font-family: 'Inter', sans-serif;
     background: #f9f9f9; /* Fond clair uniforme */
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
 }
 
 a {
@@ -75,7 +79,7 @@ a {
 
 .text-video .cta-button {
     padding: 0.8rem 1.5rem;
-    background-color: #007BFF;
+    background-color: #633FE0;
     color: white;
     border: none;
     border-radius: 8px;
@@ -104,88 +108,80 @@ a {
     outline: none;
 }
 
-#bodyup {
-    display: flex;
-    flex-direction: row;
-    align-self: center;
-}
+/*//////////////////////*/
 
-#bodydown {
-    display: flex;
-    flex-direction: row;
+main {
+  background-color: #C2DBE0;
+  width: fit-content;
+  height: 100%;
+  margin-left: 50px;
+  margin-right: 50px;
 }
-
-#chestdiv {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-}
-
 
 .body {
-    border-style: solid;
-    border-width: 1px;
-    display: flex;
-    flex: auto;
-    align-self: center;
-    background-color: grey;
+    width: 75%;
+    background-color: #252525;
+
 }
 
-.body:hover {
-  background-color: blue;
+.human-body {
+  position: relative;
+  padding-top: 240px;
+  display: block;
+  margin: 40px auto;
+  height: fit-content;
+}
+.human-body svg:hover {
+  cursor: pointer;
+}
+.human-body svg:hover path {
+  fill: #ff7d16;
+}
+.human-body svg {
+  position: absolute;
+  left: 50%;
+  fill: #89ADE0;
+}
+.human-body svg.head {
+  margin-left: -28.5px;
+  top: -6px;
+}
+.human-body svg.shoulder {
+  margin-left: -53.5px;
+  top: 69px;
+}
+.human-body svg.arm {
+  margin-left: -78px;
+  top: 112px;
+}
+.human-body svg.cheast {
+  margin-left: -43.5px;
+  top: 88px;
+}
+.human-body svg.stomach {
+  margin-left: -37.5px;
+  top: 130px;
+}
+.human-body svg.legs {
+  margin-left: -65.5px;
+  top: 205px;
+  z-index: 9999;
+}
+.human-body svg.hands {
+  margin-left: -102.5px;
+  top: 224px;
+}
+#area {
+  display: block;
+  width: 100%;
+  clear: both;
+  padding: 10px;
+  text-align: center;
+  font-size: 25px;
+  font-family: Courier New;
+  color: #a5a5a5;
 }
 
-.body:active {
-  background-color: green;
-}
-
-#divbody {
-    display: flex;
-    margin-right: 40%;
-    margin-left: 40%;
-    margin-top: 0%;
-    margin-bottom: 12%;
-    flex-direction: column;
-}
-
-#chestBtn {
-  width: 15em;
-  height: 10em;
-}
-
-#rArmBtn {
-  margin-left: 0%;
-  height: 15em;
-}
-
-#lArmBtn {  
-  margin-right: 0%;
-  height: 15em;
-}
-
-#rLegBtn {
-  margin-left: 45%;
-  height: 10em;
-}
-
-#lLegBtn {
-  margin-right: 45%;
-  height: 10em;
-}
-
-#heartBtn {
-  width: 10em;
-  height: 5em;
-}
-
-#lungBtn {
-  width: 10em;
-  height: 5em;
-}
-
-
-#heartTxt:disabled,
-#lungTxt:disabled {
-  visibility: hidden; 
-  background-color: green;
+#area #data {
+  color: black;
 }
