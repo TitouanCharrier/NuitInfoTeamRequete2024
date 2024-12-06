@@ -3,37 +3,63 @@ import Block from "./Block.js";
 export default class GameWindow {
     blocks = [];
     map;
-    player = new Player();
-    _tileHeight;
-    _tileWidth;
+    mapSet;
+    player;
     gameOn = true;
     _window;
     _context;
-    tileSize = 50;
+    tileSize = 20;
     _movementKeys;
     constructor(gametcha) {
-        this.map = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        this.mapSet = [
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2],
+                [1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1]
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2],
+                [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1]
+            ]
         ];
-        this._mappingBlocks();
+        this.map = this.mapSet[Math.floor(Math.random() * 3)];
         Block.tileSet = document.createElement("img");
         Block.tileSet.src = Block.tilePath;
-        this._tileHeight = 15;
-        this._tileWidth = 15;
         this._window = gametcha;
         let context = this._window.canvas.getContext("2d");
         if (context === null)
             throw new Error("Gametcha canvas context is null");
         this._context = context;
+        this.tileSize = this._window.canvas.width / 25;
+        this.player = new Player(this._window.canvas.width, this._window.canvas.height);
+        this._mappingBlocks();
         this._movementKeys = [];
         this._movementKeys.push({ code: "ArrowUp", state: false }, // Up arrow
         { code: "ArrowLeft", state: false }, // Left arrow
@@ -77,7 +103,11 @@ export default class GameWindow {
             this.player.moveStop();
         this.player.updatePosX();
         this.player.updatePosY();
-        console.log(this.player.getPosY());
+        if (this.player.getPosY() + this.tileSize >= this._window.canvas.height) {
+            this._reset();
+        }
+        if (this.player.getPosX() + this.tileSize >= this._window.canvas.width) {
+        }
     }
     draw() {
         this._context.clearRect(0, 0, this._window.canvas.width, this._window.canvas.height);
@@ -89,12 +119,36 @@ export default class GameWindow {
     detectCollision() {
         this.player.canGoLeft = true;
         this.player.canGoRight = true;
+        let maxHeight = -10000;
+        let toGround = false;
+        let wallCollision = false;
+        let posX = this.player.getPosX();
         this.blocks.forEach(e => {
             if (e.solid) {
+                // Collision axe X vers la droite
+                if ((this.player.getPosX() + this.tileSize > e.getPosX()) && (this.player.getPosX() < e.getPosX())) {
+                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0)) {
+                        this.player.canGoRight = false;
+                        console.log("collision");
+                        wallCollision = true;
+                        posX = e.getPosX() - this.tileSize;
+                    }
+                }
+                // Collision axe X vers la gauche ((e.getPosX() + this.tileSize) - this.player.getPosX()) > 0
+                else if ((this.player.getPosX() < e.getPosX() + this.tileSize) && (this.player.getPosX() > e.getPosX())) {
+                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0)) {
+                        this.player.canGoLeft = false;
+                        console.log("collision : (" + e.getPosY() + ", " + (e.getPosY() + this.tileSize) + ")");
+                        wallCollision = true;
+                        posX = e.getPosX() + this.tileSize;
+                    }
+                }
                 if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) <= 0) {
                     //console.log("Y check");
-                    if ((e.getPosX() - (this.player.getPosX() + this.tileSize)) <= 0 && ((e.getPosX() + this.tileSize) - (this.player.getPosX())) >= 0) {
-                        this.player.grounding((e.getPosY() - this.tileSize));
+                    if (!this.player.grounded && (e.getPosX() - (this.player.getPosX() + this.tileSize)) < 0 && ((e.getPosX() + this.tileSize) - (this.player.getPosX())) > 0) {
+                        if ((e.getPosY() - this.tileSize) > maxHeight)
+                            maxHeight = e.getPosY() - this.tileSize;
+                        toGround = true;
                         // console.log("grounding");
                     }
                 }
@@ -102,26 +156,24 @@ export default class GameWindow {
                     this.player.ungrounding();
                     //console.log("ungrounding");
                 }
-                // Collision axe X vers la droite
-                if ((e.getPosX() - (this.player.getPosX() + this.tileSize)) < 0) {
-                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0)) {
-                        this.player.canGoRight = false;
-                        console.log("collision");
-                        /*if (this.player.getXvelocity() > 0)
-                            this.player.block(e.getPosX() - this.tileSize);*/
-                    }
-                }
-                // Collision axe X vers la gauche
-                else if (((e.getPosX() + this.tileSize) - this.player.getPosX()) > 0) {
-                    if ((e.getPosY() - (this.player.getPosY() + this.tileSize)) < 0 && ((e.getPosY() + this.tileSize) - this.player.getPosY() > 0)) {
-                        this.player.canGoLeft = false;
-                        console.log("collision : (" + e.getPosY() + ", " + (e.getPosY() + this.tileSize) + ")");
-                        /*if (this.player.getXvelocity() < 0)
-                            this.player.block(e.getPosX() + this.tileSize);*/
-                    }
-                }
             }
         });
+        if (!this.player.grounded) {
+            if (toGround)
+                this.player.grounding(maxHeight);
+        }
+        else {
+            if (wallCollision && this.player.getXvelocity() > 0)
+                this.player.block(posX);
+            if (wallCollision && this.player.getXvelocity() < 0)
+                this.player.block(posX);
+        }
+    }
+    _reset() {
+        this.map = this.mapSet[Math.floor(Math.random() * 3)];
+        this._mappingBlocks();
+        this.player.setPosX(10);
+        this.player.setPosY(10);
     }
     _mappingBlocks() {
         let x = 0;

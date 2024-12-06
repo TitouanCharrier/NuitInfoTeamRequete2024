@@ -15,10 +15,12 @@ export default class Player extends Entity {
     private _score: number;
     private _XVelocity: number;
     private _maxSpeed: number;
-    private _grounded: boolean;
+    public grounded: boolean;
     private _YVelocity: number;
+    public width: number;
+    public height: number;
 
-    public constructor() {
+    public constructor(w: number, h: number) {
         super(30, 0);
         this.tilePath = "/assets/gametcha/mario/placeHolder.png";
         this.tileX = 0;
@@ -30,53 +32,59 @@ export default class Player extends Entity {
         this._livesNumber = 3;
         this._score = 0;
         this._XVelocity = 0;
-        this._maxSpeed = 5;
-        this._grounded = true;
+        this._maxSpeed = w / 200;
+        this.grounded = true;
         this._YVelocity = 0;
+        this.width = w;
+        this.height = h;
         this.tileSet.src = this.tilePath;
     }
 
     public async grounding(y: number) {
         this._posY = y;
-        this._grounded = true;
+        this.grounded = true;
     }
-    public async ungrounding() {this._grounded = false;}
+    public async ungrounding() {this.grounded = false;}
     public getXvelocity(): number {return this._XVelocity;}
     public getYvelocity(): number {return this._YVelocity;}
+    public setPosX(x: number) {this._posX = x;}
+    public setPosY(y: number) {this._posY = y;}
 
     public async moveRight() {
         if (this._XVelocity < this._maxSpeed && this.canGoRight)
-            this._XVelocity += 0.2;
+            if (this._XVelocity < 0)
+                this._XVelocity += this._maxSpeed / 10;
+            else this._XVelocity += this._maxSpeed / 30;
     }
 
     public async moveLeft() {
         if (this._XVelocity > 0 - this._maxSpeed && this.canGoLeft)
-            this._XVelocity -= 0.3;
+            if (this._XVelocity > 0)
+                this._XVelocity -= this._maxSpeed / 10;
+            else this._XVelocity -= this._maxSpeed / 30;
     }
 
     public async moveStop() {
-        if (this._XVelocity > 0)
-            this._XVelocity -= 0.3;
-        else if (this._XVelocity < 0)
-            this._XVelocity += 0.3;
+        this._XVelocity = 0;
     }
 
     public async jump() {
-        if (this._grounded) {
-            this._YVelocity = 0 - this._maxSpeed * 2.5;
-            this._grounded = false;
+        if (this.grounded) {
+            this._YVelocity = 0 - this._maxSpeed * 2;
+            this.grounded = false;
         }
     }
 
     public async updatePosX() {
-        this._posX += this._XVelocity;
+        if (this._posX + (this.width / 25 )+ this._XVelocity < this.width && this._posX + this._XVelocity > 0)
+            this._posX += this._XVelocity;
     }
 
     public async updatePosY() {
-        if (this._grounded)
+        if (this.grounded)
             this._YVelocity = 0;
-        else if (this._YVelocity < (this._maxSpeed * 2.5)) {
-            this._YVelocity += 0.5;
+        else if (this._YVelocity < (this._maxSpeed * 2)) {
+            this._YVelocity += this._maxSpeed / 10;
         }
 
         this._posY += this._YVelocity;
