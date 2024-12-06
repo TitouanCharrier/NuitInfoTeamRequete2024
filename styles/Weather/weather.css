@@ -33,6 +33,7 @@ main {
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 15px;
 }
 
 /* Style des articles */
